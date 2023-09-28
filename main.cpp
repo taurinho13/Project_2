@@ -5,7 +5,6 @@
 #include <vector>
 #include <algorithm>
 
-
 using namespace std;
 
 struct zmogus {
@@ -16,6 +15,7 @@ struct zmogus {
     float vid;
     float med;
 };
+
 int main() {
     zmogus laikinas;
     vector <zmogus> grupe;
@@ -42,6 +42,7 @@ int main() {
             nd_sum += k;
         }
         laikinas.vid = (nd_sum / n);
+        
         sort(laikinas.nd.begin(), laikinas.nd.end());
         if (n % 2 == 0) {
             int mid1 = laikinas.nd[n / 2 - 1];
@@ -63,8 +64,13 @@ int main() {
     
     for (auto& a : grupe) {
         cout << a.vardas << " " << a.pavarde << " ";
-        for (auto& z : a.nd);
-        cout << a.vid << endl;
+        if (choice == 1) {
+            cout << "Vidurkis: " << a.vid;
+        }
+        else if (choice == 2) {
+            cout << "Mediana: " << a.med;
+        }
+        cout << endl;
     }
 
     return 0;
