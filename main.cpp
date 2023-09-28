@@ -37,13 +37,20 @@ int main()
         }
         cout << "Iveskite egzamino bala " << endl;
         cin >> laikinas.egz;
+
+        float nd_sum = 0;
+        for (int k : laikinas.nd) {
+        nd_sum += k;
+        }
+        laikinas.vid = (nd_sum / n);
+        
         grupe.push_back(laikinas);
         laikinas.nd.clear();
     }
     for (auto& a : grupe) {
         cout << a.vardas << " " << a.pavarde << " ";
-        for (auto& z : a.nd) cout << z << " ";
-        cout << a.egz << endl;
+        for (auto& z : a.nd);
+        cout << a.vid << endl;
     }
 
 
