@@ -5,6 +5,8 @@
 #include <vector>
 #include <algorithm> 
 #include <sstream>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -18,6 +20,8 @@ struct zmogus {
 };
 
 int main() {
+    srand(time(0));
+
     zmogus laikinas;
     vector<zmogus> grupe;
     int zmoniu_sk;
@@ -27,9 +31,9 @@ int main() {
         cout << "Iveskite varda ir pavarde " << endl;
         cin >> laikinas.vardas >> laikinas.pavarde;
 
-        int n = -1; // Initialize n with an invalid value
+        int n = -1;
         cout << "Iveskite kiek namu darbu turi zmogus (jei nenorite ivesti, palikite tuscia ir spauskite Enter): ";
-        cin.ignore(); // Clear any remaining input from the buffer
+        cin.ignore();
         string nInput;
         getline(cin, nInput);
         if (!nInput.empty()) {
@@ -38,16 +42,47 @@ int main() {
         }
 
         if (n == -1) {
-            cout << "Iveskite namu darbu pazymius, baigus iveskite -1: " << endl;
-            int k;
-            while (true) {
-                cin >> k;
-                if (k == -1) {
-                    break;
+            cout << "Ar sugeneruoti namu darbu ir egzamino pazymius? (1 - Taip, 0 - Ne): ";
+            int generate;
+            cin >> generate;
+            if (generate) {
+                cout << "Ar norite pasirinkti namu darbu skaiciu? (1 - Taip, 0 - Ne): ";
+                int chooseN;
+                cin >> chooseN;
+                if (chooseN) {
+                    cout << "Iveskite namu darbu skaiciu: ";
+                    cin >> n;
                 }
-                laikinas.nd.push_back(k);
+                else {
+                    n = rand() % 10 + 1;
+                }
+                cout << "Sugeneruotas namu darbu kiekis: " << n << endl;
+                cout << "Sugeneruoti namu darbu pazymiai: ";
+                for (int i = 0; i < n; i++) {
+                    int k = rand() % 10 + 1;
+                    cout << k << " ";
+                    laikinas.nd.push_back(k);
+                }
+                cout << endl;
+
+                // Generate a random exam score between 1 and 10
+                laikinas.egz = rand() % 10 + 1;
+                cout << "Sugeneruotas egzamino pazymys: " << laikinas.egz << endl;
             }
-            n = laikinas.nd.size(); // Set n to the size of the vector
+            else {
+                cout << "Iveskite namu darbu pazymius, baigus iveskite -1: " << endl;
+                int k;
+                while (true) {
+                    cin >> k;
+                    if (k == -1) {
+                        break;
+                    }
+                    laikinas.nd.push_back(k);
+                }
+                n = laikinas.nd.size();
+                cout << "Iveskite egzamino bala " << endl;
+                cin >> laikinas.egz;
+            }
         }
         else {
             for (int i = 0; i < n; i++) {
@@ -56,10 +91,9 @@ int main() {
                 cin >> k;
                 laikinas.nd.push_back(k);
             }
+            cout << "Iveskite egzamino bala " << endl;
+            cin >> laikinas.egz;
         }
-
-        cout << "Iveskite egzamino bala " << endl;
-        cin >> laikinas.egz;
 
         float nd_sum = 0;
         for (int k : laikinas.nd) {
