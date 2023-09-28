@@ -1,16 +1,14 @@
 #include <iostream>
-#include <fstream>
-#include <cmath>
-#include <iomanip>
 #include <vector>
 #include <algorithm>
+#include <iomanip>
 
 using namespace std;
 
 struct zmogus {
     string vardas;
     string pavarde;
-    vector <int> nd;
+    vector<int> nd;
     int egz;
     float vid;
     float med;
@@ -18,7 +16,7 @@ struct zmogus {
 
 int main() {
     zmogus laikinas;
-    vector <zmogus> grupe;
+    vector<zmogus> grupe;
     int zmoniu_sk;
     cout << "Iveskite mokiniu skaiciu: " << endl;
     cin >> zmoniu_sk;
@@ -42,7 +40,7 @@ int main() {
             nd_sum += k;
         }
         laikinas.vid = (nd_sum / n);
-        
+
         sort(laikinas.nd.begin(), laikinas.nd.end());
         if (n % 2 == 0) {
             int mid1 = laikinas.nd[n / 2 - 1];
@@ -52,7 +50,7 @@ int main() {
         else {
             laikinas.med = laikinas.nd[n / 2];
         }
-        
+
         grupe.push_back(laikinas);
         laikinas.nd.clear();
     }
@@ -61,14 +59,17 @@ int main() {
     cin >> choice;
 
     cout << fixed << setprecision(2);
-    
+
     for (auto& a : grupe) {
         cout << a.vardas << " " << a.pavarde << " ";
+
         if (choice == 1) {
-            cout << "Vidurkis: " << a.vid;
+            float galutinis = a.vid * 0.4 + a.egz * 0.6;
+            cout << "Galutinis: " << galutinis;
         }
         else if (choice == 2) {
-            cout << "Mediana: " << a.med;
+            float galutinis = a.med * 0.4 + a.egz * 0.6;
+            cout << "Galutinis: " << galutinis;
         }
         cout << endl;
     }
