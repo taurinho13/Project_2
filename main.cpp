@@ -65,7 +65,6 @@ int main() {
                 }
                 cout << endl;
 
-                // Generate a random exam score between 1 and 10
                 laikinas.egz = rand() % 10 + 1;
                 cout << "Sugeneruotas egzamino pazymys: " << laikinas.egz << endl;
             }
