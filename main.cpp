@@ -1,7 +1,10 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
+#include <fstream>
+#include <cmath>
 #include <iomanip>
+#include <vector>
+#include <algorithm> 
+#include <sstream>
 
 using namespace std;
 
@@ -23,15 +26,38 @@ int main() {
     for (int j = 0; j < zmoniu_sk; j++) {
         cout << "Iveskite varda ir pavarde " << endl;
         cin >> laikinas.vardas >> laikinas.pavarde;
-        cout << "Kiek namu darbu pazymiu turi zmogus? " << endl;
-        int n;
-        cin >> n;
-        for (int i = 0; i < n; i++) {
-            int k;
-            cout << "Iveskite " << i + 1 << " pazymi " << endl;
-            cin >> k;
-            laikinas.nd.push_back(k);
+
+        int n = -1; // Initialize n with an invalid value
+        cout << "Iveskite kiek namu darbu turi zmogus (jei nenorite ivesti, palikite tuscia ir spauskite Enter): ";
+        cin.ignore(); // Clear any remaining input from the buffer
+        string nInput;
+        getline(cin, nInput);
+        if (!nInput.empty()) {
+            istringstream iss(nInput);
+            iss >> n;
         }
+
+        if (n == -1) {
+            cout << "Iveskite namu darbu pazymius, baigus iveskite -1: " << endl;
+            int k;
+            while (true) {
+                cin >> k;
+                if (k == -1) {
+                    break;
+                }
+                laikinas.nd.push_back(k);
+            }
+            n = laikinas.nd.size(); // Set n to the size of the vector
+        }
+        else {
+            for (int i = 0; i < n; i++) {
+                int k;
+                cout << "Iveskite " << i + 1 << " pazymi " << endl;
+                cin >> k;
+                laikinas.nd.push_back(k);
+            }
+        }
+
         cout << "Iveskite egzamino bala " << endl;
         cin >> laikinas.egz;
 
