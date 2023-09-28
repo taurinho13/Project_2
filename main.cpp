@@ -120,16 +120,27 @@ int main() {
 
     cout << fixed << setprecision(2);
 
+    cout << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(10) << "Galutinis (";
+
+    if (choice == 1) {
+        cout << std::left << "vid.)";
+    }
+    else if (choice == 2) {
+        cout << std::left << "med.)";
+    }
+
+    cout << endl;
+
     for (auto& a : grupe) {
-        cout << a.vardas << " " << a.pavarde << " ";
+        cout << std::left << setw(15) << a.vardas << setw(15) << a.pavarde << setw(20);
 
         if (choice == 1) {
             float galutinis = a.vid * 0.4 + a.egz * 0.6;
-            cout << "Galutinis: " << galutinis;
+            cout << galutinis;
         }
         else if (choice == 2) {
             float galutinis = a.med * 0.4 + a.egz * 0.6;
-            cout << "Galutinis: " << galutinis;
+            cout << galutinis;
         }
         cout << endl;
     }
