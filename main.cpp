@@ -25,94 +25,162 @@ int main() {
     zmogus laikinas;
     vector<zmogus> grupe;
     int zmoniu_sk;
-    cout << "Iveskite mokiniu skaiciu: " << endl;
-    cin >> zmoniu_sk;
-    for (int j = 0; j < zmoniu_sk; j++) {
-        cout << "Iveskite varda ir pavarde " << endl;
-        cin >> laikinas.vardas >> laikinas.pavarde;
 
-        int n = -1;
-        cout << "Iveskite kiek namu darbu turi zmogus (jei nenorite ivesti, palikite tuscia ir spauskite Enter): ";
-        cin.ignore();
-        string nInput;
-        getline(cin, nInput);
-        if (!nInput.empty()) {
-            istringstream iss(nInput);
-            iss >> n;
+    string dataChoice;
+    cout << "Do you want to read data from a file? (yes/no): ";
+    cin >> dataChoice;
+    cin.ignore();
+
+    if (dataChoice == "yes") {
+        string fileName;
+        cout << "Enter the file name (including extension): ";
+        getline(cin, fileName);
+
+        ifstream input(fileName);
+
+        if (!input.is_open()) {
+            cerr << "Failed to open the file." << endl;
+            return 1;
         }
 
-        if (n == -1) {
-            cout << "Ar sugeneruoti namu darbu ir egzamino pazymius? (1 - Taip, 0 - Ne): ";
-            int generate;
-            cin >> generate;
-            if (generate) {
-                cout << "Ar norite pasirinkti namu darbu skaiciu? (1 - Taip, 0 - Ne): ";
-                int chooseN;
-                cin >> chooseN;
-                if (chooseN) {
-                    cout << "Iveskite namu darbu skaiciu: ";
-                    cin >> n;
-                }
-                else {
-                    n = rand() % 10 + 1;
-                }
-                cout << "Sugeneruotas namu darbu kiekis: " << n << endl;
-                cout << "Sugeneruoti namu darbu pazymiai: ";
-                for (int i = 0; i < n; i++) {
-                    int k = rand() % 10 + 1;
-                    cout << k << " ";
-                    laikinas.nd.push_back(k);
-                }
-                cout << endl;
+        string line;
+        getline(input, line);
+        while (getline(input, line)) {
+            istringstream ss(line);
 
-                laikinas.egz = rand() % 10 + 1;
-                cout << "Sugeneruotas egzamino pazymys: " << laikinas.egz << endl;
+            ss >> laikinas.vardas >> laikinas.pavarde;
+
+            int k;
+            while (ss >> k) {
+                laikinas.nd.push_back(k);
+            }
+
+            /*if (laikinas.nd.size() == 0) {
+                cerr << "Invalid input format in the file." << endl;
+                return 1;
+            }*/
+
+            laikinas.egz = laikinas.nd.back();
+            laikinas.nd.pop_back();
+
+            float nd_sum = 0;
+            for (int k : laikinas.nd) {
+                nd_sum += k;
+            }
+            laikinas.vid = (nd_sum / laikinas.nd.size());
+
+            sort(laikinas.nd.begin(), laikinas.nd.end());
+            if (laikinas.nd.size() % 2 == 0) {
+                int mid1 = laikinas.nd[laikinas.nd.size() / 2 - 1];
+                int mid2 = laikinas.nd[laikinas.nd.size() / 2];
+                laikinas.med = (mid1 + mid2) / 2.0;
             }
             else {
-                cout << "Iveskite namu darbu pazymius, baigus iveskite -1: " << endl;
-                int k;
-                while (true) {
-                    cin >> k;
-                    if (k == -1) {
-                        break;
+                laikinas.med = laikinas.nd[laikinas.nd.size() / 2];
+            }
+
+            grupe.push_back(laikinas);
+            laikinas.nd.clear();
+        }
+
+        input.close(); // Close the file
+    }
+    else if (dataChoice != "no") {
+        cout << "Invalid choice. Exiting." << endl;
+        return 1;
+    }
+    else {
+        cout << "Iveskite mokiniu skaiciu: ";
+        cin >> zmoniu_sk;
+
+        for (int j = 0; j < zmoniu_sk; j++) {
+            cout << "Iveskite varda ir pavarde " << endl;
+            cin >> laikinas.vardas >> laikinas.pavarde;
+
+            int n = -1;
+            cout << "Iveskite kiek namu darbu turi zmogus (jei nenorite ivesti, palikite tuscia ir spauskite Enter): ";
+            cin.ignore();
+            string nInput;
+            getline(cin, nInput);
+            if (!nInput.empty()) {
+                istringstream iss(nInput);
+                iss >> n;
+            }
+
+            if (n == -1) {
+                cout << "Ar sugeneruoti namu darbu ir egzamino pazymius? (1 - Taip, 0 - Ne): ";
+                int generate;
+                cin >> generate;
+                if (generate) {
+                    cout << "Ar norite pasirinkti namu darbu skaiciu? (1 - Taip, 0 - Ne): ";
+                    int chooseN;
+                    cin >> chooseN;
+                    if (chooseN) {
+                        cout << "Iveskite namu darbu skaiciu: ";
+                        cin >> n;
                     }
+                    else {
+                        n = rand() % 10 + 1;
+                    }
+                    cout << "Sugeneruotas namu darbu kiekis: " << n << endl;
+                    cout << "Sugeneruoti namu darbu pazymiai: ";
+                    for (int i = 0; i < n; i++) {
+                        int k = rand() % 10 + 1;
+                        cout << k << " ";
+                        laikinas.nd.push_back(k);
+                    }
+                    cout << endl;
+
+                    laikinas.egz = rand() % 10 + 1;
+                    cout << "Sugeneruotas egzamino pazymys: " << laikinas.egz << endl;
+                }
+                else {
+                    cout << "Iveskite namu darbu pazymius, baigus iveskite -1: " << endl;
+                    int k;
+                    while (true) {
+                        cin >> k;
+                        if (k == -1) {
+                            break;
+                        }
+                        laikinas.nd.push_back(k);
+                    }
+                    n = laikinas.nd.size();
+                    cout << "Iveskite egzamino bala " << endl;
+                    cin >> laikinas.egz;
+                }
+            }
+            else {
+                for (int i = 0; i < n; i++) {
+                    int k;
+                    cout << "Iveskite " << i + 1 << " pazymi " << endl;
+                    cin >> k;
                     laikinas.nd.push_back(k);
                 }
-                n = laikinas.nd.size();
                 cout << "Iveskite egzamino bala " << endl;
                 cin >> laikinas.egz;
             }
-        }
-        else {
-            for (int i = 0; i < n; i++) {
-                int k;
-                cout << "Iveskite " << i + 1 << " pazymi " << endl;
-                cin >> k;
-                laikinas.nd.push_back(k);
+
+            float nd_sum = 0;
+            for (int k : laikinas.nd) {
+                nd_sum += k;
             }
-            cout << "Iveskite egzamino bala " << endl;
-            cin >> laikinas.egz;
-        }
+            laikinas.vid = (nd_sum / n);
 
-        float nd_sum = 0;
-        for (int k : laikinas.nd) {
-            nd_sum += k;
-        }
-        laikinas.vid = (nd_sum / n);
+            sort(laikinas.nd.begin(), laikinas.nd.end());
+            if (n % 2 == 0) {
+                int mid1 = laikinas.nd[n / 2 - 1];
+                int mid2 = laikinas.nd[n / 2];
+                laikinas.med = (mid1 + mid2) / 2.0;
+            }
+            else {
+                laikinas.med = laikinas.nd[n / 2];
+            }
 
-        sort(laikinas.nd.begin(), laikinas.nd.end());
-        if (n % 2 == 0) {
-            int mid1 = laikinas.nd[n / 2 - 1];
-            int mid2 = laikinas.nd[n / 2];
-            laikinas.med = (mid1 + mid2) / 2.0;
+            grupe.push_back(laikinas);
+            laikinas.nd.clear();
         }
-        else {
-            laikinas.med = laikinas.nd[n / 2];
-        }
-
-        grupe.push_back(laikinas);
-        laikinas.nd.clear();
     }
+
     int choice;
     cout << "Pasirinkite skaiciavimo buda (1 - Vidurkis, 2 - Mediana): ";
     cin >> choice;
