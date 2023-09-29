@@ -52,16 +52,28 @@ int main() {
 
             int k;
             while (ss >> k) {
+                if (ss.eof()) {
+                    laikinas.egz = k;
+                    break;
+                }
                 laikinas.nd.push_back(k);
             }
+
+            if (laikinas.nd.size() < 1) {
+                cerr << "Invalid input format in the file." << endl;
+                return 1;
+            }
+            /*while (ss >> k) {
+                laikinas.nd.push_back(k);
+            }*/
 
             /*if (laikinas.nd.size() == 0) {
                 cerr << "Invalid input format in the file." << endl;
                 return 1;
             }*/
 
-            laikinas.egz = laikinas.nd.back();
-            laikinas.nd.pop_back();
+            /*laikinas.egz = laikinas.nd.back();
+            laikinas.nd.pop_back();*/
 
             float nd_sum = 0;
             for (int k : laikinas.nd) {
