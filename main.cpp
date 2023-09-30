@@ -1,23 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <cmath>
-#include <iomanip>
-#include <vector>
-#include <algorithm> 
-#include <sstream>
-#include <cstdlib>
-#include <ctime>
-
-using namespace std;
-
-struct zmogus {
-    string vardas;
-    string pavarde;
-    vector<int> nd;
-    int egz;
-    float vid;
-    float med;
-};
+#include "zmogus.h"
 
 bool compareByVardas(const zmogus& a, const zmogus& b) {
     return a.vardas < b.vardas;
@@ -103,17 +84,17 @@ int main() {
             cout << "Iveskite varda ir pavarde " << endl;
             cin >> laikinas.vardas >> laikinas.pavarde;
 
-            int n = -1;
+            int ndskaicius = -1;
             cout << "Iveskite kiek namu darbu turi zmogus (jei nenorite ivesti, palikite tuscia ir spauskite Enter): ";
             cin.ignore();
             string nInput;
             getline(cin, nInput);
             if (!nInput.empty()) {
                 istringstream iss(nInput);
-                iss >> n;
+                iss >> ndskaicius;
             }
 
-            if (n == -1) {
+            if (ndskaicius == -1) {
                 cout << "Ar sugeneruoti namu darbu ir egzamino pazymius? (1 - Taip, 0 - Ne): ";
                 int generate;
                 cin >> generate;
@@ -123,14 +104,14 @@ int main() {
                     cin >> chooseN;
                     if (chooseN) {
                         cout << "Iveskite namu darbu skaiciu: ";
-                        cin >> n;
+                        cin >> ndskaicius;
                     }
                     else {
-                        n = rand() % 10 + 1;
+                        ndskaicius = rand() % 10 + 1;
                     }
-                    cout << "Sugeneruotas namu darbu kiekis: " << n << endl;
+                    cout << "Sugeneruotas namu darbu kiekis: " << ndskaicius << endl;
                     cout << "Sugeneruoti namu darbu pazymiai: ";
-                    for (int i = 0; i < n; i++) {
+                    for (int i = 0; i < ndskaicius; i++) {
                         int k = rand() % 10 + 1;
                         cout << k << " ";
                         laikinas.nd.push_back(k);
@@ -150,13 +131,13 @@ int main() {
                         }
                         laikinas.nd.push_back(k);
                     }
-                    n = laikinas.nd.size();
+                    ndskaicius = laikinas.nd.size();
                     cout << "Iveskite egzamino bala " << endl;
                     cin >> laikinas.egz;
                 }
             }
             else {
-                for (int i = 0; i < n; i++) {
+                for (int i = 0; i < ndskaicius; i++) {
                     int k;
                     cout << "Iveskite " << i + 1 << " pazymi " << endl;
                     cin >> k;
@@ -170,16 +151,16 @@ int main() {
             for (int k : laikinas.nd) {
                 nd_sum += k;
             }
-            laikinas.vid = (nd_sum / n);
+            laikinas.vid = (nd_sum / ndskaicius);
 
             sort(laikinas.nd.begin(), laikinas.nd.end());
-            if (n % 2 == 0) {
-                int mid1 = laikinas.nd[n / 2 - 1];
-                int mid2 = laikinas.nd[n / 2];
+            if (ndskaicius % 2 == 0) {
+                int mid1 = laikinas.nd[ndskaicius / 2 - 1];
+                int mid2 = laikinas.nd[ndskaicius / 2];
                 laikinas.med = (mid1 + mid2) / 2.0;
             }
             else {
-                laikinas.med = laikinas.nd[n / 2];
+                laikinas.med = laikinas.nd[ndskaicius / 2];
             }
 
             grupe.push_back(laikinas);
