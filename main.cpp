@@ -66,17 +66,6 @@ int main() {
                 cerr << "Invalid input format in the file." << endl;
                 return 1;
             }
-            /*while (ss >> k) {
-                laikinas.nd.push_back(k);
-            }*/
-
-            /*if (laikinas.nd.size() == 0) {
-                cerr << "Invalid input format in the file." << endl;
-                return 1;
-            }*/
-
-            /*laikinas.egz = laikinas.nd.back();
-            laikinas.nd.pop_back();*/
 
             float nd_sum = 0;
             for (int k : laikinas.nd) {
@@ -202,17 +191,6 @@ int main() {
     cout << "Pasirinkite skaiciavimo buda (1 - Vidurkis, 2 - Mediana): ";
     cin >> choice;
 
-    /*string outputFileName = "output.txt";  // Change the filename if needed
-    ofstream outputFile(outputFileName);
-
-    if (!outputFile.is_open()) {
-        cerr << "Failed to open the output file." << endl;
-        return 1;
-    }
-
-    outputFile << fixed << setprecision(2);
-
-    outputFile << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(10) << "Galutinis (";*/
     cout << fixed << setprecision(2);
 
     cout << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(10) << "Galutinis (";
@@ -224,7 +202,6 @@ int main() {
         cout << std::left << "med.)";
     }
 
-    /*outputFile << endl;*/
     cout << endl;
 
     for (auto& a : grupe) {
@@ -240,10 +217,6 @@ int main() {
         }
         cout << endl;
     }
-
-    /*outputFile.close(); // Close the output file
-
-    cout << "Output written to " << outputFileName << endl;*/
 
     return 0;
 }
