@@ -26,4 +26,3 @@ void calculateMedian(vector<int>& nd, float& med);
 void calculateAverage(const vector<int>& nd, float& vid);
 void sortByVardas(vector<zmogus>& grupe);
 void generateRandomGrades(int ndskaicius, vector<int>& nd);
-vector<int> inputHomeworkScores();
