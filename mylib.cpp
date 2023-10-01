@@ -73,7 +73,15 @@ void inputStudentData(vector<zmogus>& grupe) {
                 cout << "Sugeneruotas egzamino pazymys: " << laikinas.egz << endl;
             }
             else {
-                vector<int> laikinas_nd = inputHomeworkScores();
+                cout << "Iveskite namu darbu pazymius (atskirkite ivertinimus tarpais baigti - spauskite Enter): ";
+                int k;
+                while (cin >> k) {
+                    if (cin.peek() == '\n') {
+                        cin.ignore(); // Ignore the newline character
+                        break;
+                    }
+                    laikinas.nd.push_back(k);
+                }
 
                 ndskaicius = laikinas.nd.size();
                 cout << "Iveskite egzamino bala " << endl;
@@ -176,28 +184,4 @@ void generateRandomGrades(int ndskaicius, vector<int>& nd) {
         nd.push_back(k);
     }
 }
-vector<int> inputHomeworkScores() {
-    vector<int> scores;
 
-    cout << "Iveskite namu darbu pazymius (ivertinimus atskirkite tarpais, baigti - spauskite Enter): ";
-    int k;
-    while (cin >> k) {
-        if (cin.peek() == '\n') {
-            cin.ignore(); // Ignore the newline character
-            return scores; // Return the valid scores
-        }
-        scores.push_back(k);
-    }
-
-    if (cin.fail()) {
-        cin.clear(); // Clear the error state
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore remaining input
-        cerr << "Invalid input. Please enter integers only." << endl;
-        // You can add additional error handling here if needed
-
-        // Call the function recursively to try again
-        return inputHomeworkScores();
-    }
-
-    return scores;
-}
