@@ -73,15 +73,33 @@ void inputStudentData(vector<zmogus>& grupe) {
                 cout << "Sugeneruotas egzamino pazymys: " << laikinas.egz << endl;
             }
             else {
-                cout << "Iveskite namu darbu pazymius (atskirkite ivertinimus tarpais baigti - spauskite Enter): ";
-                int k;
-                while (cin >> k) {
-                    if (cin.peek() == '\n') {
-                        cin.ignore(); // Ignore the newline character
-                        break;
-                    }
-                    laikinas.nd.push_back(k);
-                }
+                while (true) {
+                    try {
+                        cout << "Iveskite namu darbu pazymius (atskirkite ivertinimus tarpais baigti - spauskite Enter): ";
+                            int k;
+
+                            while (cin >> k) {
+                                    if (k < 0 || k > 10) {
+                                    throw out_of_range("Invalid input. Please enter a number between 0 and 10.");
+                                    }
+                                    laikinas.nd.push_back(k);
+
+                                    if (cin.peek() == '\n') {
+                                    cin.ignore(); // Ignore the newline character
+                                    break;
+                                    }
+                                }
+
+                                break; // Exit the loop if all inputs were valid
+        }
+    catch (const out_of_range& e) {
+        cerr << e.what() << endl;
+        laikinas.nd.clear(); // Clear the vector if an error occurred
+    }
+    catch (const exception& e) {
+        cerr << "An exception occurred: " << e.what() << endl;
+    }
+}
 
                 ndskaicius = laikinas.nd.size();
                 cout << "Iveskite egzamino bala " << endl;
