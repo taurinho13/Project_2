@@ -22,9 +22,7 @@ int main() {
         inputStudentData(grupe);
     }
 
-    sort(grupe.begin(), grupe.end(), [](const zmogus& a, const zmogus& b) {
-        return a.vardas < b.vardas;
-        });
+    sortByVardas(grupe);
 
     int choice;
     cout << "Pasirinkite skaiciavimo buda (1 - Vidurkis, 2 - Mediana): ";
