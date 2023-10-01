@@ -14,7 +14,7 @@ void processLine(const string& line, vector<zmogus>& grupe) {
         }
         laikinas.nd.push_back(k);
     }
-
+    
     if (laikinas.nd.size() < 1) {
         cerr << "Invalid input format in the file." << endl;
         return;
@@ -108,24 +108,31 @@ void inputStudentData(vector<zmogus>& grupe) {
     }
 }
 void processFileData(vector<zmogus>& grupe) {
-    string fileName;
-    cout << "Enter the file name (including extension): ";
-    cin.ignore(); // Ignore any leftover newline characters
-    getline(cin, fileName);
+    try {
+        string fileName;
+        cout << "Irasykite failo pavadinima (iskaitant ir failo tipa): ";
+        cin.ignore();
+        getline(cin, fileName);
 
-    ifstream input(fileName);
+        ifstream input(fileName);
 
-    if (!input.is_open()) {
-        cerr << "Failed to open the file." << endl;
-        return;
+        if (!input.is_open()) {
+            throw invalid_argument("Netinkamas failo pavadinimas arba failas neegzistuoja.");
+        }
+
+        string line;
+        while (getline(input, line)) {
+            processLine(line, grupe);
+        }
+
+        input.close(); 
     }
-
-    string line;
-    while (getline(input, line)) {
-        processLine(line, grupe);
+    catch (const invalid_argument& e) {
+        cerr << "Netinkamas argumentas: " << e.what() << endl;
     }
-
-    input.close(); // Close the file
+    catch (const exception& e) {
+        cerr << "Atsirado klaida: " << e.what() << endl;
+    }
 }
 void printStudentData(const vector<zmogus>& grupe, int choice) {
     cout << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(10) << "Galutinis (";
@@ -184,4 +191,3 @@ void generateRandomGrades(int ndskaicius, vector<int>& nd) {
         nd.push_back(k);
     }
 }
-
