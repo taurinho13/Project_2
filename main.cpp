@@ -8,14 +8,14 @@ int main() {
     int zmoniu_sk;
  
     string dataChoice;
-    cout << "Do you want to read data from a file? (yes/no): ";
+    cout << "Ar norite skaityti duomenis is failo (taip/ne): ";
     cin >> dataChoice;
 
-    if (dataChoice == "yes") {
+    if (dataChoice == "taip") {
         processFileData(grupe);
     }
-    else if (dataChoice != "no") {
-        cout << "Invalid choice. Exiting." << endl;
+    else if (dataChoice != "ne") {
+        cout << "Netinkamas pasirinkimas. Exiting." << endl;
         return 1;
     }
     else {
