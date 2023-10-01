@@ -20,21 +20,9 @@ void processLine(const string& line, vector<zmogus>& grupe) {
         return;
     }
 
-    float nd_sum = 0;
-    for (int k : laikinas.nd) {
-        nd_sum += k;
-    }
-    laikinas.vid = (nd_sum / laikinas.nd.size());
+    calculateAverage(laikinas.nd, laikinas.vid);
 
-    sort(laikinas.nd.begin(), laikinas.nd.end());
-    if (laikinas.nd.size() % 2 == 0) {
-        int mid1 = laikinas.nd[laikinas.nd.size() / 2 - 1];
-        int mid2 = laikinas.nd[laikinas.nd.size() / 2];
-        laikinas.med = (mid1 + mid2) / 2.0;
-    }
-    else {
-        laikinas.med = laikinas.nd[laikinas.nd.size() / 2];
-    }
+    calculateMedian(laikinas.nd, laikinas.med);
 
     grupe.push_back(laikinas);
     laikinas.nd.clear();
@@ -77,26 +65,16 @@ void inputStudentData(vector<zmogus>& grupe) {
                 }
                 cout << "Sugeneruotas namu darbu kiekis: " << ndskaicius << endl;
                 cout << "Sugeneruoti namu darbu pazymiai: ";
-                for (int i = 0; i < ndskaicius; i++) {
-                    int k = rand() % 10 + 1;
-                    cout << k << " ";
-                    laikinas.nd.push_back(k);
-                }
+                generateRandomGrades(ndskaicius, laikinas.nd);
+
                 cout << endl;
 
                 laikinas.egz = rand() % 10 + 1;
                 cout << "Sugeneruotas egzamino pazymys: " << laikinas.egz << endl;
             }
             else {
-                cout << "Iveskite namu darbu pazymius, baigus iveskite -1: " << endl;
-                int k;
-                while (true) {
-                    cin >> k;
-                    if (k == -1) {
-                        break;
-                    }
-                    laikinas.nd.push_back(k);
-                }
+                vector<int> laikinas_nd = inputHomeworkScores();
+
                 ndskaicius = laikinas.nd.size();
                 cout << "Iveskite egzamino bala " << endl;
                 cin >> laikinas.egz;
@@ -113,21 +91,9 @@ void inputStudentData(vector<zmogus>& grupe) {
             cin >> laikinas.egz;
         }
 
-        float nd_sum = 0;
-        for (int k : laikinas.nd) {
-            nd_sum += k;
-        }
-        laikinas.vid = (nd_sum / ndskaicius);
+        calculateAverage(laikinas.nd, laikinas.vid);
 
-        sort(laikinas.nd.begin(), laikinas.nd.end());
-        if (ndskaicius % 2 == 0) {
-            int mid1 = laikinas.nd[ndskaicius / 2 - 1];
-            int mid2 = laikinas.nd[ndskaicius / 2];
-            laikinas.med = (mid1 + mid2) / 2.0;
-        }
-        else {
-            laikinas.med = laikinas.nd[ndskaicius / 2];
-        }
+        calculateMedian(laikinas.nd, laikinas.med);
 
         grupe.push_back(laikinas);
         laikinas.nd.clear();
@@ -178,4 +144,60 @@ void printStudentData(const vector<zmogus>& grupe, int choice) {
         }
         cout << endl;
     }
+}
+void calculateMedian(vector<int>& nd, float& med) {
+    sort(nd.begin(), nd.end());
+
+    if (nd.size() % 2 == 0) {
+        int mid1 = nd[nd.size() / 2 - 1];
+        int mid2 = nd[nd.size() / 2];
+        med = (mid1 + mid2) / 2.0;
+    }
+    else {
+        med = nd[nd.size() / 2];
+    }
+}
+void calculateAverage(const vector<int>& nd, float& vid) {
+    float nd_sum = 0;
+    for (int k : nd) {
+        nd_sum += k;
+    }
+    vid = (nd_sum / nd.size());
+}
+void sortByVardas(vector<zmogus>& grupe) {
+    sort(grupe.begin(), grupe.end(), [](const zmogus& a, const zmogus& b) {
+        return a.vardas < b.vardas;
+        });
+}
+void generateRandomGrades(int ndskaicius, vector<int>& nd) {
+    for (int i = 0; i < ndskaicius; i++) {
+        int k = rand() % 10 + 1;
+        cout << k << " ";
+        nd.push_back(k);
+    }
+}
+vector<int> inputHomeworkScores() {
+    vector<int> scores;
+
+    cout << "Iveskite namu darbu pazymius (ivertinimus atskirkite tarpais, baigti - spauskite Enter): ";
+    int k;
+    while (cin >> k) {
+        if (cin.peek() == '\n') {
+            cin.ignore(); // Ignore the newline character
+            return scores; // Return the valid scores
+        }
+        scores.push_back(k);
+    }
+
+    if (cin.fail()) {
+        cin.clear(); // Clear the error state
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore remaining input
+        cerr << "Invalid input. Please enter integers only." << endl;
+        // You can add additional error handling here if needed
+
+        // Call the function recursively to try again
+        return inputHomeworkScores();
+    }
+
+    return scores;
 }
