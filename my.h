@@ -24,5 +24,6 @@ void processFileData(vector<zmogus>& grupe);
 void printStudentData(const vector<zmogus>& grupe, int choice);
 void calculateMedian(vector<int>& nd, float& med);
 void calculateAverage(const vector<int>& nd, float& vid);
-void sortByVardas(vector<zmogus>& grupe);
 void generateRandomGrades(int ndskaicius, vector<int>& nd);
+bool rikiavimas(const zmogus& a, const zmogus& b);
+void printStudentDataToFile(const vector<zmogus>& grupe, int choice, ofstream& outputFile);
