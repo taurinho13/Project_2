@@ -14,11 +14,30 @@ void processLine(const string& line, vector<zmogus>& grupe) {
         }
         laikinas.nd.push_back(k);
     }
+
+    /*while (ss >> k) {
+        if (k >= 0 && k <= 10) {
+            laikinas.nd.push_back(k);
+        }
+        else {
+            cerr << "Netinkamas pazymys: " << k << endl;
+            return;
+        }
+    }
+
+    if (!laikinas.nd.empty()) {
+        //paskutinis skaicius yra egzamino rezultatas
+        laikinas.egz = laikinas.nd.back();
+        laikinas.nd.pop_back(); //pasaliname egzamino rezultata is pazymiu
+        grupe.push_back(laikinas);
+    }
+    laikinas.nd.clear();*/
     
     if (laikinas.nd.size() < 1) {
         cerr << "Invalid input format in the file." << endl;
         return;
     }
+
 
     calculateAverage(laikinas.nd, laikinas.vid);
 
@@ -76,30 +95,30 @@ void inputStudentData(vector<zmogus>& grupe) {
                 while (true) {
                     try {
                         cout << "Iveskite namu darbu pazymius (atskirkite ivertinimus tarpais baigti - spauskite Enter): ";
-                            int k;
+                        int k;
 
-                            while (cin >> k) {
-                                    if (k < 0 || k > 10) {
-                                    throw out_of_range("Invalid input. Please enter a number between 0 and 10.");
-                                    }
-                                    laikinas.nd.push_back(k);
+                        while (cin >> k) {
+                            if (k < 0 || k > 10) {
+                                throw out_of_range("Invalid input. Please enter a number between 0 and 10.");
+                            }
+                            laikinas.nd.push_back(k);
 
-                                    if (cin.peek() == '\n') {
-                                    cin.ignore(); // Ignore the newline character
-                                    break;
-                                    }
-                                }
+                            if (cin.peek() == '\n') {
+                                cin.ignore(); // Ignore the newline character
+                                break;
+                            }
+                        }
 
-                                break; // Exit the loop if all inputs were valid
-        }
-    catch (const out_of_range& e) {
-        cerr << e.what() << endl;
-        laikinas.nd.clear(); // Clear the vector if an error occurred
-    }
-    catch (const exception& e) {
-        cerr << "An exception occurred: " << e.what() << endl;
-    }
-}
+                        break; // Exit the loop if all inputs were valid
+                    }
+                    catch (const out_of_range& e) {
+                        cerr << e.what() << endl;
+                        laikinas.nd.clear(); // Clear the vector if an error occurred
+                    }
+                    catch (const exception& e) {
+                        cerr << "An exception occurred: " << e.what() << endl;
+                    }
+                }
 
                 ndskaicius = laikinas.nd.size();
                 cout << "Iveskite egzamino bala " << endl;
@@ -126,7 +145,7 @@ void inputStudentData(vector<zmogus>& grupe) {
     }
 }
 void processFileData(vector<zmogus>& grupe) {
-    try {
+    
         string fileName;
         cout << "Irasykite failo pavadinima (iskaitant ir failo tipa): ";
         cin.ignore();
@@ -137,20 +156,15 @@ void processFileData(vector<zmogus>& grupe) {
         if (!input.is_open()) {
             throw invalid_argument("Netinkamas failo pavadinimas arba failas neegzistuoja.");
         }
+        string columnNames;
+        getline(input, columnNames);
 
         string line;
         while (getline(input, line)) {
             processLine(line, grupe);
         }
 
-        input.close(); 
-    }
-    catch (const invalid_argument& e) {
-        cerr << "Netinkamas argumentas: " << e.what() << endl;
-    }
-    catch (const exception& e) {
-        cerr << "Atsirado klaida: " << e.what() << endl;
-    }
+        input.close();
 }
 void printStudentData(const vector<zmogus>& grupe, int choice) {
     cout << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(10) << "Galutinis (";
@@ -169,11 +183,11 @@ void printStudentData(const vector<zmogus>& grupe, int choice) {
 
         if (choice == 1) {
             float galutinis = a.vid * 0.4 + a.egz * 0.6;
-            cout << galutinis;
+            cout << fixed  << galutinis<< setprecision(2);
         }
         else if (choice == 2) {
             float galutinis = a.med * 0.4 + a.egz * 0.6;
-            cout << galutinis;
+            cout << fixed << galutinis<< setprecision(2);
         }
         cout << endl;
     }
@@ -207,5 +221,57 @@ void generateRandomGrades(int ndskaicius, vector<int>& nd) {
         int k = rand() % 10 + 1;
         cout << k << " ";
         nd.push_back(k);
+    }
+}
+bool rikiavimas(const zmogus& a, const zmogus& b) {
+    size_t i = 0, j = 0;
+    while (i < a.vardas.size() && j < b.vardas.size()) {
+        if (isdigit(a.vardas[i]) && isdigit(b.vardas[j])) {
+            int numA = 0, numB = 0;
+            while (i < a.vardas.size() && isdigit(a.vardas[i])) {
+                numA = numA * 10 + (a.vardas[i] - '0');
+                i++;
+            }
+            while (j < b.vardas.size() && isdigit(b.vardas[j])) {
+                numB = numB * 10 + (b.vardas[j] - '0');
+                j++;
+            }
+            if (numA != numB)
+                return numA < numB;
+        }
+        else {
+            if (a.vardas[i] != b.vardas[j])
+                return a.vardas[i] < b.vardas[j];
+            i++;
+            j++;
+        }
+    }
+    return a.vardas.size() < b.vardas.size();
+
+}
+void printStudentDataToFile(const vector<zmogus>& grupe, int choice, ofstream& outputFile) {
+    outputFile << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(10) << "Galutinis (";
+
+    if (choice == 1) {
+        outputFile << std::left << "vid.)";
+    }
+    else if (choice == 2) {
+        outputFile << std::left << "med.)";
+    }
+
+    outputFile << endl;
+
+    for (const auto& a : grupe) {
+        outputFile << std::left << setw(15) << a.vardas << setw(15) << a.pavarde << setw(20);
+
+        if (choice == 1) {
+            float galutinis = a.vid * 0.4 + a.egz * 0.6;
+            outputFile << fixed << galutinis << setprecision(2);
+        }
+        else if (choice == 2) {
+            float galutinis = a.med * 0.4 + a.egz * 0.6;
+            outputFile << fixed << galutinis << setprecision(2);
+        }
+        outputFile << endl;
     }
 }
