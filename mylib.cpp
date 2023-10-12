@@ -14,24 +14,6 @@ void processLine(const string& line, vector<zmogus>& grupe) {
         }
         laikinas.nd.push_back(k);
     }
-
-    /*while (ss >> k) {
-        if (k >= 0 && k <= 10) {
-            laikinas.nd.push_back(k);
-        }
-        else {
-            cerr << "Netinkamas pazymys: " << k << endl;
-            return;
-        }
-    }
-
-    if (!laikinas.nd.empty()) {
-        //paskutinis skaicius yra egzamino rezultatas
-        laikinas.egz = laikinas.nd.back();
-        laikinas.nd.pop_back(); //pasaliname egzamino rezultata is pazymiu
-        grupe.push_back(laikinas);
-    }
-    laikinas.nd.clear();*/
     
     if (laikinas.nd.size() < 1) {
         cerr << "Invalid input format in the file." << endl;
