@@ -5,32 +5,32 @@ int main() {
 
     zmogus laikinas;
     vector<zmogus> grupe;
-    int zmoniu_sk;
- 
+    int zmoniu_sk=0;
+
     string dataChoice;
     cout << "Ar norite skaityti duomenis is failo (taip/ne): ";
     cin >> dataChoice;
-
+    
     if (dataChoice == "taip") {
         processFileData(grupe);
-    }
-    else if (dataChoice != "ne") {
-        cout << "Netinkamas pasirinkimas. Exiting." << endl;
-        return 1;
+
+        sort(grupe.begin(), grupe.end(), rikiavimas);
+        int choice;
+        cout << "Pasirinkite skaiciavimo buda (1 - Vidurkis, 2 - Mediana): ";
+        cin >> choice;
+
+        ofstream outputFile("output.txt");
+        printStudentDataToFile(grupe, choice, outputFile);
+        outputFile.close(); 
     }
     else {
         inputStudentData(grupe);
+        int choice;
+        cout << "Pasirinkite skaiciavimo buda (1 - Vidurkis, 2 - Mediana): ";
+        cin >> choice;
+
+        sort(grupe.begin(), grupe.end(), rikiavimas);
+        printStudentData(grupe, choice);
     }
-
-    sortByVardas(grupe);
-
-    int choice;
-    cout << "Pasirinkite skaiciavimo buda (1 - Vidurkis, 2 - Mediana): ";
-    cin >> choice;
-
-    cout << fixed << setprecision(2);
-
-    printStudentData(grupe, choice);
-
     return 0;
 };
