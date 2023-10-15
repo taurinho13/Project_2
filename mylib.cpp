@@ -1,5 +1,25 @@
 #include "zmogus.h"
 
+void processFileData(vector<zmogus>& grupe) {
+
+    string fileName;
+    cout << "Irasykite failo pavadinima (iskaitant ir failo tipa): ";
+    cin.ignore();
+    getline(cin, fileName);
+
+    ifstream input(fileName);
+
+    if (!input.is_open()) {
+        throw invalid_argument("Netinkamas failo pavadinimas arba failas neegzistuoja.");
+    }
+
+    string line;
+    while (getline(input, line)) {
+        processLine(line, grupe);
+    }
+
+    input.close();
+}
 void processLine(const string& line, vector<zmogus>& grupe) {
     istringstream ss(line);
     zmogus laikinas;
@@ -14,7 +34,7 @@ void processLine(const string& line, vector<zmogus>& grupe) {
         }
         laikinas.nd.push_back(k);
     }
-    
+
     if (laikinas.nd.size() < 1) {
         cerr << "Invalid input format in the file." << endl;
         return;
@@ -27,6 +47,25 @@ void processLine(const string& line, vector<zmogus>& grupe) {
 
     grupe.push_back(laikinas);
     laikinas.nd.clear();
+}
+void calculateMedian(vector<int>& nd, float& med) {
+    sort(nd.begin(), nd.end());
+
+    if (nd.size() % 2 == 0) {
+        int mid1 = nd[nd.size() / 2 - 1];
+        int mid2 = nd[nd.size() / 2];
+        med = (mid1 + mid2) / 2.0;
+    }
+    else {
+        med = nd[nd.size() / 2];
+    }
+}
+void calculateAverage(const vector<int>& nd, float& vid) {
+    float nd_sum = 0;
+    for (int k : nd) {
+        nd_sum += k;
+    }
+    vid = (nd_sum / nd.size());
 }
 void inputStudentData(vector<zmogus>& grupe) {
     int zmoniu_sk;
@@ -126,28 +165,6 @@ void inputStudentData(vector<zmogus>& grupe) {
         laikinas.nd.clear();
     }
 }
-void processFileData(vector<zmogus>& grupe) {
-    
-        string fileName;
-        cout << "Irasykite failo pavadinima (iskaitant ir failo tipa): ";
-        cin.ignore();
-        getline(cin, fileName);
-
-        ifstream input(fileName);
-
-        if (!input.is_open()) {
-            throw invalid_argument("Netinkamas failo pavadinimas arba failas neegzistuoja.");
-        }
-        string columnNames;
-        getline(input, columnNames);
-
-        string line;
-        while (getline(input, line)) {
-            processLine(line, grupe);
-        }
-
-        input.close();
-}
 void printStudentData(const vector<zmogus>& grupe, int choice) {
     cout << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(10) << "Galutinis (";
 
@@ -165,33 +182,14 @@ void printStudentData(const vector<zmogus>& grupe, int choice) {
 
         if (choice == 1) {
             float galutinis = a.vid * 0.4 + a.egz * 0.6;
-            cout << fixed  << galutinis<< setprecision(2);
+            cout << fixed << galutinis << setprecision(2);
         }
         else if (choice == 2) {
             float galutinis = a.med * 0.4 + a.egz * 0.6;
-            cout << fixed << galutinis<< setprecision(2);
+            cout << fixed << galutinis << setprecision(2);
         }
         cout << endl;
     }
-}
-void calculateMedian(vector<int>& nd, float& med) {
-    sort(nd.begin(), nd.end());
-
-    if (nd.size() % 2 == 0) {
-        int mid1 = nd[nd.size() / 2 - 1];
-        int mid2 = nd[nd.size() / 2];
-        med = (mid1 + mid2) / 2.0;
-    }
-    else {
-        med = nd[nd.size() / 2];
-    }
-}
-void calculateAverage(const vector<int>& nd, float& vid) {
-    float nd_sum = 0;
-    for (int k : nd) {
-        nd_sum += k;
-    }
-    vid = (nd_sum / nd.size());
 }
 void sortByVardas(vector<zmogus>& grupe) {
     sort(grupe.begin(), grupe.end(), [](const zmogus& a, const zmogus& b) {
@@ -267,6 +265,7 @@ void generateStudentFilesAutomatically() {
 
     for (int i = 0; i < 5; i++) {
         generateStudentFile(numStudents[i], numHomeworks, filenames[i]);
+        calculateGalutinisForFile(filenames[i]);
     }
 }
 void generateStudentFile(int numStudents, int numHomeworks, const std::string& filename) {
@@ -282,31 +281,31 @@ void generateStudentFile(int numStudents, int numHomeworks, const std::string& f
     if (outputFile.is_open()) {
         outputFile << std::left << std::setw(22) << "Vardas" << std::setw(22) << "Pavarde";
 
-for (int i = 1; i <= numHomeworks; ++i) {
-    outputFile << std::setw(10) << "ND" + std::to_string(i);
-}
+        for (int i = 1; i <= numHomeworks; ++i) {
+            outputFile << std::setw(10) << "ND" + std::to_string(i);
+        }
 
-outputFile << std::setw(10) << " Egzaminas\n"; 
+        outputFile << std::setw(10) << " Egzaminas\n";
 
-for (int i = 0; i < 94; ++i) {
-    outputFile << "-";
-}
-outputFile << "\n";
-for (int i = 1; i <= numStudents; ++i) {
-    std::stringstream studentData;
-    studentData << std::left << std::setw(22) << ("Vardenis" + std::to_string(i));
-    studentData << std::left << std::setw(22) << ("Pavardenis" + std::to_string(i));
+        for (int i = 0; i < 94; ++i) {
+            outputFile << "-";
+        }
+        outputFile << "\n";
+        for (int i = 1; i <= numStudents; ++i) {
+            std::stringstream studentData;
+            studentData << std::left << std::setw(22) << ("Vardenis" + std::to_string(i));
+            studentData << std::left << std::setw(22) << ("Pavardenis" + std::to_string(i));
 
-    for (int j = 0; j < numHomeworks; ++j) {
-        studentData << std::setw(10) << ndDist(gen);
-    }
+            for (int j = 0; j < numHomeworks; ++j) {
+                studentData << std::setw(10) << ndDist(gen);
+            }
 
-    studentData << std::setw(11) << examDist(gen) << std::endl;
-    outputFile << studentData.str();
-}
+            studentData << std::setw(11) << examDist(gen) << std::endl;
+            outputFile << studentData.str();
+        }
 
-outputFile.close();
-std::cout << "Generated: " << filename << std::endl;
+        outputFile.close();
+        std::cout << "Generated: " << filename << std::endl;
     }
     else {
         std::cerr << "Unable to open file: " << filename << std::endl;
@@ -315,4 +314,74 @@ std::cout << "Generated: " << filename << std::endl;
     auto end = std::chrono::high_resolution_clock::now(); // End timing
     std::chrono::duration<double> duration = end - start;
     std::cout << "Execution time: " << duration.count() << " seconds" << std::endl;
+}
+void calculateGalutinis(zmogus& student) {
+    if (student.nd.size() > 0) {
+        float sum = std::accumulate(student.nd.begin(), student.nd.end(), 0.0);
+        student.vid = (sum / static_cast<float>(student.nd.size()));
+        student.galutinis = student.vid * 0.4 + student.egz * 0.6;
+    }
+    else {
+        student.vid = 0.0;
+        student.galutinis = student.egz * 0.6;
+    }
+}
+void calculateGalutinisForFile(const std::string& filename) {
+    std::ifstream inputFile(filename);
+
+    if (inputFile.is_open()) {
+        std::string line;
+        std::vector<zmogus> students;
+
+        while (std::getline(inputFile, line)) {
+            std::istringstream iss(line);
+            zmogus student;
+            iss >> student.vardas >> student.pavarde;
+
+            int grade;
+
+            if (iss >> grade) {
+                student.egz = grade;
+                while (iss >> grade) {
+                    student.nd.push_back(grade);
+                }
+            }
+            else {
+                student.egz = 0;
+            }
+
+            calculateGalutinis(student);
+
+            students.push_back(student);
+        }
+
+        inputFile.close();
+
+        // Sort students by galutinis
+        std::sort(students.begin(), students.end(), [](const zmogus& a, const zmogus& b) {
+            return a.galutinis > b.galutinis;
+            });
+
+        // Write students with galutinis > 5 to one file and others to another file
+        std::ofstream fileOver5("students_over5_" + filename);
+        std::ofstream file5AndUnder("students_5andUnder_" + filename);
+
+        fileOver5 << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(10) << "Galutinis\n";
+        file5AndUnder << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(10) << "Galutinis\n";
+
+        for (const zmogus& student : students) {
+            if (student.galutinis > 5) {
+                fileOver5 << std::left << std::setw(20) << student.vardas << std::setw(20) << student.pavarde << std::setw(10) << student.galutinis << "\n";
+            }
+            else {
+                file5AndUnder << std::left << std::setw(20) << student.vardas << std::setw(20) << student.pavarde << std::setw(10) << student.galutinis << "\n";
+            }
+        }
+
+        fileOver5.close();
+        file5AndUnder.close();
+    }
+    else {
+        std::cerr << "Unable to open file: " << filename << std::endl;
+    }
 }
