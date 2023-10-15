@@ -8,6 +8,8 @@
 #include <sstream>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
+#include <random>
 using namespace std;
 
 struct zmogus {
@@ -27,3 +29,5 @@ void calculateAverage(const vector<int>& nd, float& vid);
 void generateRandomGrades(int ndskaicius, vector<int>& nd);
 bool rikiavimas(const zmogus& a, const zmogus& b);
 void printStudentDataToFile(const vector<zmogus>& grupe, int choice, ofstream& outputFile);
+void generateStudentFile(int numStudents, int numHomeworks, const std::string& filename);
+void generateStudentFilesAutomatically();
