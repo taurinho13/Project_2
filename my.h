@@ -35,3 +35,4 @@ void generateStudentFile(int numStudents, int numHomeworks, const std::string& f
 void generateStudentFilesAutomatically();
 void calculateGalutinis(zmogus& student);
 void calculateGalutinisForFile(const std::string& filename);
+bool compareStudents(const zmogus& a, const zmogus& b);
