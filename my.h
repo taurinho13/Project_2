@@ -10,6 +10,7 @@
 #include <ctime>
 #include <chrono>
 #include <random>
+#include <numeric>
 using namespace std;
 
 struct zmogus {
@@ -19,6 +20,7 @@ struct zmogus {
     int egz;
     float vid;
     float med;
+    float galutinis;
 };
 void processLine(const string& line, vector<zmogus>& grupe);
 void inputStudentData(vector<zmogus>& grupe);
@@ -31,3 +33,5 @@ bool rikiavimas(const zmogus& a, const zmogus& b);
 void printStudentDataToFile(const vector<zmogus>& grupe, int choice, ofstream& outputFile);
 void generateStudentFile(int numStudents, int numHomeworks, const std::string& filename);
 void generateStudentFilesAutomatically();
+void calculateGalutinis(zmogus& student);
+void calculateGalutinisForFile(const std::string& filename);
