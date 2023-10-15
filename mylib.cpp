@@ -257,3 +257,49 @@ void printStudentDataToFile(const vector<zmogus>& grupe, int choice, ofstream& o
         outputFile << endl;
     }
 }
+void generateStudentFilesAutomatically() {
+    srand(time(0));
+
+    int numStudents[] = { 1000, 10000, 100000, 1000000, 10000000 };
+    int numHomeworks = 4;
+    string filenames[] = { "students_1000.txt", "students_10000.txt", "students_100000.txt",
+                          "students_1000000.txt", "students_10000000.txt" };
+
+    for (int i = 0; i < 5; i++) {
+        generateStudentFile(numStudents[i], numHomeworks, filenames[i]);
+    }
+}
+void generateStudentFile(int numStudents, int numHomeworks, const std::string& filename) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> examDist(1, 10);
+    std::uniform_int_distribution<> ndDist(1, 10);
+
+    auto start = std::chrono::high_resolution_clock::now(); // Start timing
+
+    std::ofstream outputFile(filename);
+
+    if (outputFile.is_open()) {
+        for (int i = 1; i <= numStudents; ++i) {
+            std::stringstream studentData;
+            studentData << "Vardenis" << i << " Pavardenis" << i;
+
+            for (int j = 0; j < numHomeworks; ++j) {
+                studentData << " " << ndDist(gen);
+            }
+
+            studentData << " " << examDist(gen) << std::endl;
+            outputFile << studentData.str();
+        }
+
+        outputFile.close();
+        std::cout << "Generated: " << filename << std::endl;
+    }
+    else {
+        std::cerr << "Unable to open file: " << filename << std::endl;
+    }
+
+    auto end = std::chrono::high_resolution_clock::now(); // End timing
+    std::chrono::duration<double> duration = end - start;
+    std::cout << "Execution time: " << duration.count() << " seconds" << std::endl;
+}
