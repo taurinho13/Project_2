@@ -280,20 +280,33 @@ void generateStudentFile(int numStudents, int numHomeworks, const std::string& f
     std::ofstream outputFile(filename);
 
     if (outputFile.is_open()) {
-        for (int i = 1; i <= numStudents; ++i) {
-            std::stringstream studentData;
-            studentData << "Vardenis" << i << " Pavardenis" << i;
+        outputFile << std::left << std::setw(22) << "Vardas" << std::setw(22) << "Pavarde";
 
-            for (int j = 0; j < numHomeworks; ++j) {
-                studentData << " " << ndDist(gen);
-            }
+for (int i = 1; i <= numHomeworks; ++i) {
+    outputFile << std::setw(10) << "ND" + std::to_string(i);
+}
 
-            studentData << " " << examDist(gen) << std::endl;
-            outputFile << studentData.str();
-        }
+outputFile << std::setw(10) << " Egzaminas\n"; 
 
-        outputFile.close();
-        std::cout << "Generated: " << filename << std::endl;
+for (int i = 0; i < 94; ++i) {
+    outputFile << "-";
+}
+outputFile << "\n";
+for (int i = 1; i <= numStudents; ++i) {
+    std::stringstream studentData;
+    studentData << std::left << std::setw(22) << ("Vardenis" + std::to_string(i));
+    studentData << std::left << std::setw(22) << ("Pavardenis" + std::to_string(i));
+
+    for (int j = 0; j < numHomeworks; ++j) {
+        studentData << std::setw(10) << ndDist(gen);
+    }
+
+    studentData << std::setw(11) << examDist(gen) << std::endl;
+    outputFile << studentData.str();
+}
+
+outputFile.close();
+std::cout << "Generated: " << filename << std::endl;
     }
     else {
         std::cerr << "Unable to open file: " << filename << std::endl;
