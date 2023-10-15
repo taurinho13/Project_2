@@ -372,8 +372,8 @@ void calculateGalutinisForFile(const std::string& filename) {
         auto endSort = std::chrono::high_resolution_clock::now();
 
         auto startWrite = std::chrono::high_resolution_clock::now();
-        std::ofstream fileOver5("kietiakai" + filename);
-        std::ofstream file5AndUnder("vargsiukai" + filename);
+        std::ofstream fileOver5("kietiakai_" + filename);
+        std::ofstream file5AndUnder("vargsiukai_" + filename);
 
         fileOver5 << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(10) << "Galutinis\n";
         file5AndUnder << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(10) << "Galutinis\n";
