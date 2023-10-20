@@ -160,7 +160,8 @@ void printStudentData(const vector<zmogus>& grupe, int choice) {
     }
 
     cout << endl;
-
+    cout << std::setw(45) << std::setfill('-') << "-" << std::setfill(' ') << std::endl;
+    
     for (const auto& a : grupe) {
         cout << std::left << setw(15) << a.vardas << setw(15) << a.pavarde << setw(20);
 
@@ -243,6 +244,7 @@ void printStudentDataToFile(const vector<zmogus>& grupe, int choice, ofstream& o
     }
 
     outputFile << endl;
+    outputFile << std::setw(45) << std::setfill('-') << "-" << std::setfill(' ') << std::endl;
 
     for (const auto& a : grupe) {
         outputFile << std::left << setw(15) << a.vardas << setw(15) << a.pavarde << setw(20);
