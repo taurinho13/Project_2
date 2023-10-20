@@ -12,16 +12,24 @@ int main() {
     cin >> dataChoice;
     
     if (dataChoice == "taip") {
+
         processFileData(grupe);
 
+        auto start = std::chrono::high_resolution_clock::now();
+
         sort(grupe.begin(), grupe.end(), rikiavimas);
+
+        auto end = std::chrono::high_resolution_clock::now(); // Record the end time
+        std::chrono::duration<double> duration = end - start;
+        std::cout << "Failo rikiavimo laikas: " << duration.count() << " seconds" << std::endl;
+
         int choice;
         cout << "Pasirinkite skaiciavimo buda (1 - Vidurkis, 2 - Mediana): ";
         cin >> choice;
 
         ofstream outputFile("output.txt");
         printStudentDataToFile(grupe, choice, outputFile);
-        outputFile.close(); 
+        outputFile.close();
     }
     else {
         inputStudentData(grupe);
