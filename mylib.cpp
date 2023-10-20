@@ -1,26 +1,30 @@
 #include "zmogus.h"
 
 void processFileData(vector<zmogus>& grupe) {
-    
-        string fileName;
-        cout << "Irasykite failo pavadinima (iskaitant ir failo tipa): ";
-        cin.ignore();
-        getline(cin, fileName);
 
-        ifstream input(fileName);
+    string fileName;
+    cout << "Irasykite failo pavadinima (iskaitant ir failo tipa): ";
+    cin.ignore();
+    getline(cin, fileName);
 
-        if (!input.is_open()) {
-            throw invalid_argument("Netinkamas failo pavadinimas arba failas neegzistuoja.");
-        }
-        string columnNames;
-        getline(input, columnNames);
+    ifstream input(fileName);
 
-        string line;
-        while (getline(input, line)) {
-            processLine(line, grupe);
-        }
+    if (!input.is_open()) {
+        throw invalid_argument("Netinkamas failo pavadinimas arba failas neegzistuoja.");
+    }
 
-        input.close();
+    auto start = std::chrono::high_resolution_clock::now();
+
+    string line;
+    while (getline(input, line)) {
+        processLine(line, grupe);
+    }
+
+    auto end = std::chrono::high_resolution_clock::now(); // Record the end time
+    std::chrono::duration<double> duration = end - start;
+    std::cout << "Failo nuskaitymo laikas: " << duration.count() << " seconds" << std::endl;
+
+    input.close();
 }
 void processLine(const string& line, vector<zmogus>& grupe) {
     istringstream ss(line);
@@ -178,8 +182,10 @@ void printStudentData(const vector<zmogus>& grupe, int choice) {
 }
 void calculateMedian(vector<int>& nd, float& med) {
     sort(nd.begin(), nd.end());
-
-    if (nd.size() % 2 == 0) {
+    if (nd.empty()) {
+        med = 0.0;
+    }
+    else if (nd.size() % 2 == 0) {
         int mid1 = nd[nd.size() / 2 - 1];
         int mid2 = nd[nd.size() / 2];
         med = (mid1 + mid2) / 2.0;
@@ -189,6 +195,10 @@ void calculateMedian(vector<int>& nd, float& med) {
     }
 }
 void calculateAverage(const vector<int>& nd, float& vid) {
+    if (nd.empty()) {
+        vid = 0.0;
+    }
+
     float nd_sum = 0;
     for (int k : nd) {
         nd_sum += k;
