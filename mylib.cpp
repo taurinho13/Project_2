@@ -1,5 +1,27 @@
 #include "zmogus.h"
 
+void processFileData(vector<zmogus>& grupe) {
+    
+        string fileName;
+        cout << "Irasykite failo pavadinima (iskaitant ir failo tipa): ";
+        cin.ignore();
+        getline(cin, fileName);
+
+        ifstream input(fileName);
+
+        if (!input.is_open()) {
+            throw invalid_argument("Netinkamas failo pavadinimas arba failas neegzistuoja.");
+        }
+        string columnNames;
+        getline(input, columnNames);
+
+        string line;
+        while (getline(input, line)) {
+            processLine(line, grupe);
+        }
+
+        input.close();
+}
 void processLine(const string& line, vector<zmogus>& grupe) {
     istringstream ss(line);
     zmogus laikinas;
@@ -126,28 +148,7 @@ void inputStudentData(vector<zmogus>& grupe) {
         laikinas.nd.clear();
     }
 }
-void processFileData(vector<zmogus>& grupe) {
-    
-        string fileName;
-        cout << "Irasykite failo pavadinima (iskaitant ir failo tipa): ";
-        cin.ignore();
-        getline(cin, fileName);
 
-        ifstream input(fileName);
-
-        if (!input.is_open()) {
-            throw invalid_argument("Netinkamas failo pavadinimas arba failas neegzistuoja.");
-        }
-        string columnNames;
-        getline(input, columnNames);
-
-        string line;
-        while (getline(input, line)) {
-            processLine(line, grupe);
-        }
-
-        input.close();
-}
 void printStudentData(const vector<zmogus>& grupe, int choice) {
     cout << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(10) << "Galutinis (";
 
