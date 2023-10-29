@@ -191,11 +191,6 @@ void printStudentData(const vector<zmogus>& grupe, int choice) {
         cout << endl;
     }
 }
-void sortByVardas(vector<zmogus>& grupe) {
-    sort(grupe.begin(), grupe.end(), [](const zmogus& a, const zmogus& b) {
-        return a.vardas < b.vardas;
-        });
-}
 void generateRandomGrades(int ndskaicius, vector<int>& nd) {
     for (int i = 0; i < ndskaicius; i++) {
         int k = rand() % 10 + 1;
@@ -256,23 +251,26 @@ void printStudentDataToFile(const vector<zmogus>& grupe, int choice, ofstream& o
     }
 }
 void generateStudentFilesAutomatically() {
-    srand(time(0));
-
     int numStudents[] = { 1000, 10000, 100000, 1000000, 10000000 };
     int numHomeworks = 4;
     string filenames[] = { "students_1000.txt", "students_10000.txt", "students_100000.txt",
                           "students_1000000.txt", "students_10000000.txt" };
 
-
     for (int i = 0; i < 5; i++) {
-        auto start = std::chrono::high_resolution_clock::now(); // Start timing
-        generateStudentFile(numStudents[i], numHomeworks, filenames[i]);
-        auto end = std::chrono::high_resolution_clock::now(); // End timing
-        std::chrono::duration<double> duration = end - start;
-        std::cout << "Failo kurimo laikas (" << filenames[i] << "): " << duration.count() << " sekundes" << std::endl;
+
+        ifstream fileCheck(filenames[i]);
+        if (fileCheck.good()) {
+            //cout << "File " << filenames[i] << " already exists. Skipping generation." << endl;
+        }
+        else {
+            auto start = std::chrono::high_resolution_clock::now(); 
+            generateStudentFile(numStudents[i], numHomeworks, filenames[i]);
+            auto end = std::chrono::high_resolution_clock::now(); 
+            std::chrono::duration<double> duration = end - start;
+            std::cout << "Failo kurimo laikas (" << filenames[i] << "): " << duration.count() << " sekundes" << std::endl;
+        }
 
         calculateGalutinisForFile(filenames[i]);
-
     }
 }
 void generateStudentFile(int numStudents, int numHomeworks, const std::string& filename) {
@@ -280,8 +278,6 @@ void generateStudentFile(int numStudents, int numHomeworks, const std::string& f
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> examDist(1, 10);
     std::uniform_int_distribution<> ndDist(1, 10);
-
-    auto start = std::chrono::high_resolution_clock::now(); // Start timing
 
     std::ofstream outputFile(filename);
 
@@ -318,20 +314,6 @@ void generateStudentFile(int numStudents, int numHomeworks, const std::string& f
         std::cerr << "Nepavyko atidaryti failo: " << filename << std::endl;
     }
 
-    auto end = std::chrono::high_resolution_clock::now(); // End timing
-    std::chrono::duration<double> duration = end - start;
-    std::cout << "Ivykdymo laikas: " << duration.count() << "sekundes" << std::endl;
-}
-void calculateGalutinis(zmogus& student) {
-    if (student.nd.size() > 0) {
-        float sum = std::accumulate(student.nd.begin(), student.nd.end(), 0.0);
-        student.vid = (sum / static_cast<float>(student.nd.size()));
-        student.galutinis = student.vid * 0.4 + student.egz * 0.6;
-    }
-    else {
-        student.vid = 0.0;
-        student.galutinis = student.egz * 0.6;
-    }
 }
 void calculateGalutinisForFile(const std::string& filename) {
     auto start = std::chrono::high_resolution_clock::now();
@@ -367,49 +349,117 @@ void calculateGalutinisForFile(const std::string& filename) {
         inputFile.close();
         auto endRead = std::chrono::high_resolution_clock::now();
 
+        std::chrono::duration<double> durationRead = endRead - startRead;
+        std::cout << "Failo (" << filename << ") nuskaitymo laikas: " << durationRead.count() << " sekundes" << std::endl;
+
+        string sortingCriteria;
+
+        cout << "Pasirinkite pagal ka surusiuoti duomenis (vardas/pavarde/galutinis): ";
+        cin >> sortingCriteria;
+
         auto startSort = std::chrono::high_resolution_clock::now();
-        std::sort(students.begin(), students.end(), compareStudents);
+
+        if (sortingCriteria == "vardas") {
+            std::sort(students.begin(), students.end(), [](const zmogus& a, const zmogus& b) {
+                return rikiavimas(a, b);
+                });
+        }
+        else if (sortingCriteria == "pavarde") {
+            std::sort(students.begin(), students.end(), [](const zmogus& a, const zmogus& b) {
+                return rikiavimaspav(a, b);
+                });
+        }
+        else if (sortingCriteria == "galutinis") {
+            std::sort(students.begin(), students.end(), compareStudents);
+        }
+        else {
+            cout << "Invalid sorting criteria. Using default (galutinis)." << endl;
+            std::sort(students.begin(), students.end(), compareStudents);
+        }
         auto endSort = std::chrono::high_resolution_clock::now();
 
-        auto startWrite = std::chrono::high_resolution_clock::now();
-        std::ofstream fileOver5("kietiakai_" + filename);
-        std::ofstream file5AndUnder("vargsiukai_" + filename);
+        std::chrono::duration<double> durationSort = endSort - startSort;
+        std::cout << "Failo (" << filename << ") rusiavimo laikas : " << durationSort.count() << " sekundes" << std::endl;
 
-        fileOver5 << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(10) << "Galutinis\n";
-        file5AndUnder << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(10) << "Galutinis\n";
+        std::ofstream kietiakai("kietiakai_" + filename);
+        std::ofstream vargsiukai("vargsiukai_" + filename);
 
+        kietiakai << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(10) << "Galutinis\n";
+        vargsiukai << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(10) << "Galutinis\n";
+
+        auto startWriteOver5 = std::chrono::high_resolution_clock::now(); 
         for (const zmogus& student : students) {
-            if (student.galutinis > 5) {
-                fileOver5 << std::left << std::setw(20) << student.vardas << std::setw(20) << student.pavarde << std::setw(10) << student.galutinis << "\n";
-            }
-            else {
-                file5AndUnder << std::left << std::setw(20) << student.vardas << std::setw(20) << student.pavarde << std::setw(10) << student.galutinis << "\n";
+            if (student.galutinis >= 5) {
+                kietiakai << std::left << std::setw(20) << student.vardas << std::setw(20) << student.pavarde << std::setw(10) << student.galutinis << "\n";
             }
         }
+        auto endWriteOver5 = std::chrono::high_resolution_clock::now();
 
-        fileOver5.close();
-        file5AndUnder.close();
-        auto endWrite = std::chrono::high_resolution_clock::now(); // End timing for writing
+        std::chrono::duration<double> durationWriteOver5 = endWriteOver5 - startWriteOver5; 
+        std::cout << "Irasimo i faila (kietiakai): " << durationWriteOver5.count() << " sekundes" << std::endl; 
 
-        std::chrono::duration<double> durationRead = endRead - startRead;
-        std::cout << "Failo nuskaitymo laikas(" << filename << "): " << durationRead.count() << " sekundes" << std::endl;
+        auto startWriteUnder5 = std::chrono::high_resolution_clock::now(); 
+        for (const zmogus& student : students) {
+            if (student.galutinis < 5) {
+                vargsiukai << std::left << std::setw(20) << student.vardas << std::setw(20) << student.pavarde << std::setw(10) << student.galutinis << "\n";
+            }
+        }
+        auto endWriteUnder5 = std::chrono::high_resolution_clock::now(); 
 
-        std::chrono::duration<double> durationSort = endSort - startSort;
-        std::cout << "Failo rusiavimo laikas (" << filename << "): " << durationSort.count() << " sekundes" << std::endl;
+        std::chrono::duration<double> durationWriteUnder5 = endWriteUnder5 - startWriteUnder5; 
+        std::cout << "Irasimo i faila (vargsiuaki): " << durationWriteUnder5.count() << " sekundes" << std::endl;
 
-        std::chrono::duration<double> durationWrite = endWrite - startWrite;
-        std::cout << "Irasimo i faila laikas(" << filename << "): " << durationWrite.count() << " sekundes" << std::endl;
+        kietiakai.close();
+        vargsiukai.close();
+
     }
     else {
         std::cerr << "Nepavyko atidaryti failo: " << filename << std::endl;
     }
-    auto end = std::chrono::high_resolution_clock::now(); // End timing
+    auto end = std::chrono::high_resolution_clock::now(); 
     std::chrono::duration<double> duration = end - start;
     std::cout << "Bendras failo apdorojimo laikas (" << filename << "): " << duration.count() << " sekundes" << std::endl;
+}
+void calculateGalutinis(zmogus& student) {
+    if (student.nd.size() > 0) {
+        float sum = std::accumulate(student.nd.begin(), student.nd.end(), 0.0);
+        student.vid = (sum / static_cast<float>(student.nd.size()));
+        student.galutinis = student.vid * 0.4 + student.egz * 0.6;
+    }
+    else {
+        student.vid = 0.0;
+        student.galutinis = student.egz * 0.6;
+    }
 }
 bool compareStudents(const zmogus& a, const zmogus& b) {
     if (a.galutinis == b.galutinis) {
         return rikiavimas(a, b);
     }
-    return a.galutinis > b.galutinis; // Sort by galutinis in descending order
+    return a.galutinis > b.galutinis; 
+}
+bool rikiavimaspav(const zmogus& a, const zmogus& b) {
+    size_t i = 0, j = 0;
+    while (i < a.pavarde.size() && j < b.pavarde.size()) {
+        if (isdigit(a.pavarde[i]) && isdigit(b.pavarde[j])) {
+            int numA = 0, numB = 0;
+            while (i < a.pavarde.size() && isdigit(a.pavarde[i])) {
+                numA = numA * 10 + (a.vardas[i] - '0');
+                i++;
+            }
+            while (j < b.pavarde.size() && isdigit(b.pavarde[j])) {
+                numB = numB * 10 + (b.pavarde[j] - '0');
+                j++;
+            }
+            if (numA != numB)
+                return numA < numB;
+        }
+        else {
+            if (a.pavarde[i] != b.pavarde[j])
+                return a.pavarde[i] < b.pavarde[j];
+            i++;
+            j++;
+        }
+    }
+    return a.pavarde.size() < b.pavarde.size();
+
 }
