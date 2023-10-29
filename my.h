@@ -36,3 +36,4 @@ void generateStudentFilesAutomatically();
 void calculateGalutinis(zmogus& student);
 void calculateGalutinisForFile(const std::string& filename);
 bool compareStudents(const zmogus& a, const zmogus& b);
+bool rikiavimaspav(const zmogus& a, const zmogus& b);
