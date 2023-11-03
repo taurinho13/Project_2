@@ -175,7 +175,8 @@ void printStudentData(const vector<zmogus>& grupe, int choice) {
         cout << std::left << "med.)";
     }
 
-    cout << endl;
+    cout << setw(15) << "Address" << endl;
+    cout << std::setfill('-') << std::setw(60) << "-" << std::setfill(' ') << std::endl;
 
     for (const auto& a : grupe) {
         cout << std::left << setw(15) << a.vardas << setw(15) << a.pavarde << setw(20);
@@ -188,6 +189,11 @@ void printStudentData(const vector<zmogus>& grupe, int choice) {
             float galutinis = a.med * 0.4 + a.egz * 0.6;
             cout << fixed << galutinis << setprecision(2);
         }
+
+        // Get the address of the object and convert it to a string
+        uintptr_t address = reinterpret_cast<uintptr_t>(&a);
+        cout << " 0x" << std::hex << address << std::dec;
+        
         cout << endl;
     }
 }
