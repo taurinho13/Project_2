@@ -322,7 +322,7 @@ void generateStudentFile(int numStudents, int numHomeworks, const std::string& f
 
 }
 void calculateGalutinisForFile(const std::string& filename) {
-    auto start = std::chrono::high_resolution_clock::now();
+
     std::ifstream inputFile(filename);
 
     if (inputFile.is_open()) {
@@ -418,13 +418,13 @@ void calculateGalutinisForFile(const std::string& filename) {
         kietiakai.close();
         vargsiukai.close();
 
+        double totalTime = durationRead.count() + durationSort.count() + durationWriteOver5.count() + durationWriteUnder5.count();
+        std::cout << "Bendras failo apdorojimo laikas: " << totalTime << " seconds" << std::endl;
+
     }
     else {
         std::cerr << "Nepavyko atidaryti failo: " << filename << std::endl;
     }
-    auto end = std::chrono::high_resolution_clock::now(); 
-    std::chrono::duration<double> duration = end - start;
-    std::cout << "Bendras failo apdorojimo laikas (" << filename << "): " << duration.count() << " sekundes" << std::endl;
 }
 void calculateGalutinis(zmogus& student) {
     if (student.nd.size() > 0) {
