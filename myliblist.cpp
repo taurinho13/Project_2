@@ -177,13 +177,15 @@ void printStudentData(const list<zmogus>& grupe, int choice) {
     cout << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(10) << "Galutinis (";
 
     if (choice == 1) {
-        cout << std::left << "vid.)";
+        cout << setw(10) << std::left << "vid.)";
     }
     else if (choice == 2) {
-        cout << std::left << "med.)";
+        cout << setw(10) << std::left << "med.)";
     }
 
-    cout << endl;
+    cout << setw(15) << "Address" << endl;
+
+    cout << std::setfill('-') << std::setw(60) << "-" << std::setfill(' ') << std::endl;
 
     for (const auto& a : grupe) {
         cout << std::left << setw(15) << a.vardas << setw(15) << a.pavarde << setw(20);
@@ -196,6 +198,11 @@ void printStudentData(const list<zmogus>& grupe, int choice) {
             float galutinis = a.med * 0.4 + a.egz * 0.6;
             cout << fixed << galutinis << setprecision(2);
         }
+
+        // Get the address of the object and convert it to a string
+        uintptr_t address = reinterpret_cast<uintptr_t>(&a);
+        cout << " 0x" << std::hex << address << std::dec;
+
         cout << endl;
     }
 }
@@ -299,7 +306,7 @@ void generateStudentFile(int numStudents, int numHomeworks, const std::string& f
 
 }
 void calculateGalutinisForFile(const std::string& filename) {
-    auto start = std::chrono::high_resolution_clock::now();
+
     std::ifstream inputFile(filename);
 
     if (inputFile.is_open()) {
@@ -395,13 +402,14 @@ void calculateGalutinisForFile(const std::string& filename) {
         kietiakai.close();
         vargsiukai.close();
 
+        double totalTime = durationRead.count() + durationSort.count() + durationWriteOver5.count() + durationWriteUnder5.count();
+        std::cout << "Bendras failo apdorojimo laikas: " << totalTime << " seconds" << std::endl;
+
     }
     else {
         std::cerr << "Nepavyko atidaryti failo: " << filename << std::endl;
     }
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> duration = end - start;
-    std::cout << "Bendras failo apdorojimo laikas (" << filename << "): " << duration.count() << " sekundes" << std::endl;
+
 }
 void calculateGalutinis(zmogus& student) {
     if (student.nd.size() > 0) {
