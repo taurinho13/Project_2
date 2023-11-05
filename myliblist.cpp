@@ -206,10 +206,14 @@ void printStudentData(const list<zmogus>& grupe, int choice) {
         cout << endl;
     }
 }
-void generateRandomGrades(int ndskaicius, list<int>& nd) {
+void generateRandomGrades(int ndskaicius, std::list<int>& nd) {
+    std::random_device rd; 
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 10);
+
     for (int i = 0; i < ndskaicius; i++) {
-        int k = rand() % 10 + 1;
-        cout << k << " ";
+        int k = dis(gen);
+        std::cout << k << " ";
         nd.push_back(k);
     }
 }
