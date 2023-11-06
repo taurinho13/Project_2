@@ -413,7 +413,7 @@ void calculateGalutinisForFile(const std::string& filename) {
         auto endWriteUnder5 = std::chrono::high_resolution_clock::now(); 
 
         std::chrono::duration<double> durationWriteUnder5 = endWriteUnder5 - startWriteUnder5; 
-        std::cout << "Irasimo i faila (vargsiuaki): " << durationWriteUnder5.count() << " sekundes" << std::endl;
+        std::cout << "Irasimo i faila (vargsiukai): " << durationWriteUnder5.count() << " sekundes" << std::endl;
 
         kietiakai.close();
         vargsiukai.close();
