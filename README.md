@@ -1,10 +1,10 @@
 # My-first-project
 Projektas 1 v0.3
 
-#Parametrai
+# Parametrai
 
 
-#Vector
+# Vector
 
 Kodo su vektoriaus naudojimu testavimo rezultatai
 | **Testavimas**        |  **1 000** | **10 000** | **100 000** | **1 000 000** | **10 000 000** |
@@ -16,7 +16,7 @@ Kodo su vektoriaus naudojimu testavimo rezultatai
 | Bendras               | 0.01324536 |  0.1468424 |  1.1331264  |   10.854396   |    102.55104   |
 
 
-#List
+# List
 
 Kodo su list naudojimu testavimo rezultatai
 | **Testavimas**        |  **1 000** | **10 000** | **100 000** | **1 000 000** | **10 000 000** |
