@@ -3,7 +3,9 @@ Projektas 1 v0.3
 
 # Parametrai
 
-
+| CPU                                                  | RAM                          | SSD                   |
+|------------------------------------------------------|------------------------------|-----------------------|
+| Intel(R) Core(TM) i5-8265U  CPU @ 1.60GHz   1.80 GHz | 8.00 GB  (7.82 GB naudotina) | 237GB (laisva 27.5GB) |
 # Vector
 
 Kodo su vektoriaus naudojimu testavimo rezultatai
