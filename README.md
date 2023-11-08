@@ -17,6 +17,8 @@ Kodo su vektoriaus naudojimu testavimo rezultatai
 | Įrašymas į kietiakus  | 0.00145286 | 0.00904412 |  0.06355044 |   0.7150944   |     6.17213    |
 | Bendras               | 0.01324536 |  0.1468424 |  1.1331264  |   10.854396   |    102.55104   |
 
+![Screenshot 2023-11-06 233523](https://github.com/taurinho13/My-first-project/assets/146191931/efcb3fb8-54e6-4f06-9ba8-7bb626c36dda)
+
 
 # List
 
@@ -28,4 +30,6 @@ Kodo su list naudojimu testavimo rezultatai
 | Įrašymas į vargšiukus | 0.00191572 |  0.017269  |  0.1023385  |   0.9332406   |    9.048574    |
 | Įrašymas į kietiakus  | 0.00145286 | 0.00904412 |  0.06355044 |   0.7150944   |     6.17213    |
 | Bendras               | 0.01324536 |  0.1468424 |  1.1331264  |   10.854396   |    102.55104   |
+
+![Screenshot 2023-11-07 003939](https://github.com/taurinho13/My-first-project/assets/146191931/fa6256d6-1698-4ba7-94be-d9fb531a0591)
 
