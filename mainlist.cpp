@@ -23,7 +23,7 @@ int main() {
             processFileData(grupe);
 
             grupe.sort([](const zmogus& a, const zmogus& b) {
-                return a.pavarde < b.pavarde;
+                return rikiavimas(a, b);
                 });
             int choice;
             cout << "Pasirinkite skaiciavimo buda (1 - Vidurkis, 2 - Mediana): ";
@@ -40,7 +40,7 @@ int main() {
             cin >> choice;
 
             grupe.sort([](const zmogus& a, const zmogus& b) {
-                return a.pavarde < b.pavarde;
+                return rikiavimas(a, b);
                 });
             printStudentData(grupe, choice);
         }
