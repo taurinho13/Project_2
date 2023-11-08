@@ -6,6 +6,7 @@ Projektas 1 v0.3
 | CPU                                                  | RAM                          | SSD                   |
 |------------------------------------------------------|------------------------------|-----------------------|
 | Intel(R) Core(TM) i5-8265U  CPU @ 1.60GHz   1.80 GHz | 8.00 GB  (7.82 GB naudotina) | 237GB (laisva 27.5GB) |
+
 # Vector
 
 Kodo su vektoriaus naudojimu testavimo rezultatai
@@ -31,5 +32,7 @@ Kodo su list naudojimu testavimo rezultatai
 | Įrašymas į vargšiukus | 0.001420086 | 0.01116592 |  0.09882368 |   1.0048504   |     9.93641    |
 | Įrašymas į kietiakus  |  0.00076736 |  0.0070931 |  0.0709022  |   0.7275666   |    7.493674    |
 | Bendras               |  0.01207222 |  0.0945787 |   0.762172  |    8.206898   |    81.15504    |
-![Screenshot 2023-11-07 003939](https://github.com/taurinho13/My-first-project/assets/146191931/fa6256d6-1698-4ba7-94be-d9fb531a0591)
+
+
+[Screenshot 2023-11-07 003939](https://github.com/taurinho13/My-first-project/assets/146191931/fa6256d6-1698-4ba7-94be-d9fb531a0591)
 
