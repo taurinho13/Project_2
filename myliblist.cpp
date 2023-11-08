@@ -254,7 +254,7 @@ void generateStudentFilesAutomatically() {
 
         ifstream fileCheck(filenames[i]);
         if (fileCheck.good()) {
-            //cout << "File " << filenames[i] << " already exists. Skipping generation." << endl;
+            cout << "File " << filenames[i] << " already exists. Skipping generation." << endl;
         }
         else {
             auto start = std::chrono::high_resolution_clock::now();
