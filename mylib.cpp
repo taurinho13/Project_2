@@ -273,6 +273,7 @@ void generateStudentFilesAutomatically() {
     cout << "Pasirinkite strategija (1 - Strategija 1, 2 - Strategija 2): ";
     int strategija;
     cin >> strategija;
+    cout << '\n';
 
     for (int i = 0; i < 5; i++) {
 
