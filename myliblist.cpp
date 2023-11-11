@@ -251,6 +251,7 @@ void generateStudentFilesAutomatically() {
                           "students_1000000.txt", "students_10000000.txt" };
     
     cout << "Pasirinkite pagal ka surusiuoti duomenis (v - vardas, p - pavarde, g - galutinis): ";
+    string rusiavimoKriterijus;
     cin >> rusiavimoKriterijus;
 
     cout << "Pasirinkite strategija (1 - Strategija 1, 2 - Strategija 2): ";
