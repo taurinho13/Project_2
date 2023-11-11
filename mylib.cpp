@@ -378,17 +378,17 @@ void calculateGalutinisForFile(const string& filename, string rusiavimoKriteriju
 
         auto startSort = std::chrono::high_resolution_clock::now();
 
-        if (sortingCriteria == "v") {
+        if (rusiavimoKriterijus == "v") {
             std::sort(students.begin(), students.end(), [](const zmogus& a, const zmogus& b) {
                 return rikiavimas(a, b);
                 });
         }
-        else if (sortingCriteria == "p") {
+        else if (rusiavimoKriterijus == "p") {
             std::sort(students.begin(), students.end(), [](const zmogus& a, const zmogus& b) {
                 return rikiavimaspav(a, b);
                 });
         }
-        else if (sortingCriteria == "g") {
+        else if (rusiavimoKriterijus == "g") {
             std::sort(students.begin(), students.end(), compareStudents);
         }
         else {
