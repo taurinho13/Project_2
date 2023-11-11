@@ -198,9 +198,13 @@ void printStudentData(const vector<zmogus>& grupe, int choice) {
     }
 }
 void generateRandomGrades(int ndskaicius, vector<int>& nd) {
+    std::random_device rd; 
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 10);
+
     for (int i = 0; i < ndskaicius; i++) {
-        int k = rand() % 10 + 1;
-        cout << k << " ";
+        int k = dis(gen);
+        std::cout << k << " ";
         nd.push_back(k);
     }
 }
@@ -262,11 +266,19 @@ void generateStudentFilesAutomatically() {
     string filenames[] = { "students_1000.txt", "students_10000.txt", "students_100000.txt",
                           "students_1000000.txt", "students_10000000.txt" };
 
+    cout << "Pasirinkite pagal ka surusiuoti duomenis (v - vardas, p - pavarde, g - galutinis): ";
+    string rusiavimoKriterijus;
+    cin >> rusiavimoKriterijus;
+
+    cout << "Pasirinkite strategija (1 - Strategija 1, 2 - Strategija 2): ";
+    int strategija;
+    cin >> strategija;
+
     for (int i = 0; i < 5; i++) {
 
         ifstream fileCheck(filenames[i]);
         if (fileCheck.good()) {
-            //cout << "File " << filenames[i] << " already exists. Skipping generation." << endl;
+            cout << "File " << filenames[i] << " already exists. Skipping generation." << endl;
         }
         else {
             auto start = std::chrono::high_resolution_clock::now(); 
@@ -276,7 +288,7 @@ void generateStudentFilesAutomatically() {
             std::cout << "Failo kurimo laikas (" << filenames[i] << "): " << duration.count() << " sekundes" << std::endl;
         }
 
-        calculateGalutinisForFile(filenames[i]);
+        calculateGalutinisForFile(filenames[i], rusiavimoKriterijus, strategija);
     }
 }
 void generateStudentFile(int numStudents, int numHomeworks, const std::string& filename) {
@@ -321,16 +333,16 @@ void generateStudentFile(int numStudents, int numHomeworks, const std::string& f
     }
 
 }
-void calculateGalutinisForFile(const std::string& filename) {
+void calculateGalutinisForFile(const string& filename, string rusiavimoKriterijus, int strategija) {
 
-    std::ifstream inputFile(filename);
+    ifstream inputFile(filename);
 
     if (inputFile.is_open()) {
-        auto startRead = std::chrono::high_resolution_clock::now();
-        std::string line;
-        std::vector<zmogus> students;
+        auto startRead = chrono::high_resolution_clock::now();
+        string line;
+        vector<zmogus> students;
 
-        while (std::getline(inputFile, line)) {
+        while (getline(inputFile, line)) {
             std::istringstream iss(line);
             zmogus student;
             iss >> student.vardas >> student.pavarde;
@@ -358,24 +370,24 @@ void calculateGalutinisForFile(const std::string& filename) {
         std::chrono::duration<double> durationRead = endRead - startRead;
         std::cout << "Failo (" << filename << ") nuskaitymo laikas: " << durationRead.count() << " sekundes" << std::endl;
 
-        string sortingCriteria;
+        /*string sortingCriteria;
 
         cout << "Pasirinkite pagal ka surusiuoti duomenis (vardas/pavarde/galutinis): ";
-        cin >> sortingCriteria;
+        cin >> sortingCriteria;*/
 
         auto startSort = std::chrono::high_resolution_clock::now();
 
-        if (sortingCriteria == "vardas") {
+        if (sortingCriteria == "v") {
             std::sort(students.begin(), students.end(), [](const zmogus& a, const zmogus& b) {
                 return rikiavimas(a, b);
                 });
         }
-        else if (sortingCriteria == "pavarde") {
+        else if (sortingCriteria == "p") {
             std::sort(students.begin(), students.end(), [](const zmogus& a, const zmogus& b) {
                 return rikiavimaspav(a, b);
                 });
         }
-        else if (sortingCriteria == "galutinis") {
+        else if (sortingCriteria == "g") {
             std::sort(students.begin(), students.end(), compareStudents);
         }
         else {
@@ -383,10 +395,13 @@ void calculateGalutinisForFile(const std::string& filename) {
             std::sort(students.begin(), students.end(), compareStudents);
         }
         auto endSort = std::chrono::high_resolution_clock::now();
-
+ 
         std::chrono::duration<double> durationSort = endSort - startSort;
         std::cout << "Failo (" << filename << ") rusiavimo laikas : " << durationSort.count() << " sekundes" << std::endl;
-
+        
+        
+        if (strategija == 1) { 
+            
         std::ofstream kietiakai("kietiakai_" + filename);
         std::ofstream vargsiukai("vargsiukai_" + filename);
 
@@ -420,7 +435,58 @@ void calculateGalutinisForFile(const std::string& filename) {
 
         double totalTime = durationRead.count() + durationSort.count() + durationWriteOver5.count() + durationWriteUnder5.count();
         std::cout << "Bendras failo apdorojimo laikas: " << totalTime << " seconds" << std::endl;
+        }
 
+        else if (strategija == 2) {
+            
+            vector <zmogus> vargsiukai;
+            
+            for (auto it = students.begin(); it != students.end(); ) {
+                if (it->galutinis < 5) {
+                    vargsiukai.push_back(*it);
+                    it = students.erase(it);
+                }
+                else {
+                    ++it;
+                }
+            }
+
+            ofstream studentsFile("students_" + filename);
+            ofstream vargsiukaiFile("vargsiukai2_" + filename);
+
+            studentsFile << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(10) << "Galutinis\n";
+            vargsiukaiFile << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(10) << "Galutinis\n";
+
+            auto startStudent = std::chrono::high_resolution_clock::now();
+
+            for (const auto& student : students) {
+                studentsFile << std::left << std::setw(20) << student.vardas << std::setw(20) << student.pavarde << std::setw(10) << student.galutinis << "\n";
+            }
+            
+            auto endStudent = chrono::high_resolution_clock::now();
+
+
+            chrono::duration<double> durationStudent = endStudent - startStudent;
+            cout << "Irasimo i faila (Student): " << durationStudent.count() << " sekundes" << endl;
+
+            auto startVargsiukai = chrono::high_resolution_clock::now();
+
+            for (const auto& student : vargsiukai) {
+                vargsiukaiFile << left << setw(20) << student.vardas << setw(20) << student.pavarde << setw(10) << student.galutinis << "\n";
+            }
+
+            auto endVargsiukai = chrono::high_resolution_clock::now();
+
+            chrono::duration<double> durationVargsiukai = endVargsiukai - startVargsiukai;
+            cout << "Irasimo i faila (vargsiukai): " << durationVargsiukai.count() << " sekundes" << endl;
+
+            studentsFile.close();
+            vargsiukaiFile.close();
+
+            double totalTime = durationRead.count() + durationSort.count() + durationStudent.count() + durationVargsiukai.count();
+            cout << "Bendras failo apdorojimo laikas: " << totalTime << " seconds" << endl;
+            cout << '\n';
+        }
     }
     else {
         std::cerr << "Nepavyko atidaryti failo: " << filename << std::endl;
