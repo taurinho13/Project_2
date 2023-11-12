@@ -1,8 +1,8 @@
-# My-first-project
-Projektas 1 v0.3
+# Projektas 1
+Projektas 1 v1.0
 
 # Parametrai
-
+Įrankių, kuriais buvo naudojamasi projekto metu, parametrai. Pirmuoju įrenginiu buvo naudojamasi iki 0.3 versijos, o antruoju užbaigiant 1.0.
 | CPU                                                  | RAM                          | SSD                   |
 |------------------------------------------------------|------------------------------|-----------------------|
 | Intel(R) Core(TM) i5-8265U  CPU @ 1.60GHz   1.80 GHz | 8.00 GB  (7.82 GB naudotina) | 237GB (laisva 27.5GB) |
@@ -35,4 +35,15 @@ Kodo su list naudojimu testavimo rezultatai
 
 
 [Screenshot 2023-11-07 003939](https://github.com/taurinho13/My-first-project/assets/146191931/fa6256d6-1698-4ba7-94be-d9fb531a0591)
+
+# Vectorius su strategija 1
+
+|      Testavimas      |    1 000   |   10 000   |  100 000 | 1 000 000  | 10 000 000 |
+|:--------------------:|:----------:|:----------:|:--------:|:----------:|:----------:|
+|      Nuskaitymas     | 0.01345906 |  0.104796  |  1.04519 |   10.9532  |   108.312  |
+|      Rūšiavimas      |  0.0013722 |  0.0256748 | 0.389636 |   5.55111  |   76.1943  |
+|      Padalinimas     | 0.00045536 |  0.0059923 | 0.066721 |  0.989759  |   14.084   |
+|  kietiakai surašymas |  0.0030653 |  0.0230104 | 0.198478 |   1.99002  |   20.324   |
+| vargšiukai surašymas |  0.0021897 |  0.0161488 | 0.137186 |   1.35657  |   13.8472  |
+|        Bendras       | 0.02054162 | 0.17562229 | 1.837211 |  20.840659 |  232.7615  |
 
