@@ -507,6 +507,60 @@ void calculateGalutinisForFile(const string& filename, string rusiavimoKriteriju
             cout << "Bendras failo apdorojimo laikas: " << totalTime << " seconds" << endl;
             cout << '\n';
         }
+
+                else if (strategija == 3) {
+          
+            vector<zmogus> kietiakaiStudents;
+            vector<zmogus> vargsiukaiStudents;
+
+            auto startDivide = std::chrono::high_resolution_clock::now();
+
+            auto partitionIter = std::partition(students.begin(), students.end(),
+                [](const zmogus& student) {
+                    return student.galutinis >= 5;
+                }
+            );
+
+            std::copy(students.begin(), partitionIter, std::back_inserter(kietiakaiStudents));
+
+            std::copy(partitionIter, students.end(), std::back_inserter(vargsiukaiStudents));
+
+            auto endDivide = std::chrono::high_resolution_clock::now();
+
+            chrono::duration<double> durationDivide = endDivide - startDivide;
+
+            std::cout << "padalijimo laikas: " << durationDivide.count() << " sekundes" << std::endl;
+
+            std::ofstream kietiakai("kietiakai_" + filename);
+            kietiakai << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(10) << "Galutinis\n";
+            
+            auto startWriteOver5 = std::chrono::high_resolution_clock::now();
+            for (const zmogus& student : kietiakaiStudents) {
+                kietiakai << std::left << std::setw(20) << student.vardas << std::setw(20) << student.pavarde << std::setw(10) << student.galutinis << "\n";
+            }
+            auto endWriteOver5 = std::chrono::high_resolution_clock::now();
+            kietiakai.close();
+
+            std::chrono::duration<double> durationWriteOver5 = endWriteOver5 - startWriteOver5;
+            std::cout << "Irasimo i faila (kietiakai): " << durationWriteOver5.count() << " sekundes" << std::endl;
+
+            // Writing vargsiukaiStudents to file
+            std::ofstream vargsiukai("vargsiukai_" + filename);
+            vargsiukai << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(10) << "Galutinis\n";
+            auto startWriteUnder5 = std::chrono::high_resolution_clock::now();
+            for (const zmogus& student : vargsiukaiStudents) {
+                vargsiukai << std::left << std::setw(20) << student.vardas << std::setw(20) << student.pavarde << std::setw(10) << student.galutinis << "\n";
+            }
+            auto endWriteUnder5 = std::chrono::high_resolution_clock::now();
+            vargsiukai.close();
+
+            std::chrono::duration<double> durationWriteUnder5 = endWriteUnder5 - startWriteUnder5;
+            std::cout << "Irasimo i faila (vargsiukai): " << durationWriteUnder5.count() << " sekundes" << std::endl;
+
+            double totalTime = durationDivide.count() + durationWriteOver5.count() + durationWriteUnder5.count();
+            std::cout << "Bendras failo apdorojimo laikas: " << totalTime << " sekundes" << std::endl;
+            cout << '\n';
+        }
     }
     else {
         std::cerr << "Nepavyko atidaryti failo: " << filename << std::endl;
