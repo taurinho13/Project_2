@@ -447,15 +447,16 @@ void calculateGalutinisForFile(const string& filename, string rusiavimoKriteriju
     std::chrono::duration<double> durationWriteUnder5 = endWriteUnder5 - startWriteUnder5;
     std::cout << "Irasimo i faila (vargsiukai): " << durationWriteUnder5.count() << " seconds" << std::endl;
 
-    double totalTime = durationDivide.count() + durationWriteOver5.count() + durationWriteUnder5.count();
-    std::cout << "Bendras failo apdorojimo laikas: " << totalTime << " seconds" << std::endl;
+    double totalTime = durationRead.count() + durationSort.count() + durationDivide.count() + durationStudent.count() + durationVargsiukai.count();
+    cout << "Bendras failo apdorojimo laikas: " << totalTime << " seconds" << endl;
     cout << '\n';
 }
 
         else if (strategija == 2) {
             
             vector <zmogus> vargsiukai;
-            
+
+            auto startDivide = std::chrono::high_resolution_clock::now();
             for (auto it = students.begin(); it != students.end(); ) {
                 if (it->galutinis < 5) {
                     vargsiukai.push_back(*it);
@@ -465,6 +466,10 @@ void calculateGalutinisForFile(const string& filename, string rusiavimoKriteriju
                     ++it;
                 }
             }
+            auto endDivide = std::chrono::high_resolution_clock::now();
+
+            std::chrono::duration<double> durationDivide = endDivide - startDivide;
+            std::cout << "Dividing into containers: " << durationDivide.count() << " seconds" << std::endl;
 
             ofstream studentsFile("students_" + filename);
             ofstream vargsiukaiFile("vargsiukai2_" + filename);
@@ -498,7 +503,7 @@ void calculateGalutinisForFile(const string& filename, string rusiavimoKriteriju
             studentsFile.close();
             vargsiukaiFile.close();
 
-            double totalTime = durationRead.count() + durationSort.count() + durationStudent.count() + durationVargsiukai.count();
+            double totalTime = durationRead.count() + durationSort.count() + durationDivide.count() + durationStudent.count() + durationVargsiukai.count();
             cout << "Bendras failo apdorojimo laikas: " << totalTime << " seconds" << endl;
             cout << '\n';
         }
