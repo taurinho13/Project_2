@@ -3,10 +3,13 @@ Projektas 1 v1.0
 
 # Parametrai
 Įrankių, kuriais buvo naudojamasi projekto metu, parametrai. Pirmuoju įrenginiu buvo naudojamasi iki 0.3 versijos, o antruoju užbaigiant 1.0.
+
 |                        **CPU**                       |            **RAM**           |          **SSD**         |
 |:----------------------------------------------------:|:----------------------------:|:------------------------:|
 | Intel(R) Core(TM) i5-8265U  CPU @ 1.60GHz   1.80 GHz | 8.00 GB  (7.82 GB naudotina) |  237 GB (laisva 27.5 GB) |
 |   Intel(R) Celeron(R) CPUJ3455 @ 1.50 GHz 1.50 GHz   |     6 GB (5.85 naudotina)    | 58.4 GB (laisva 3.37 GB) |
+
+
 # Vector
 
 Kodo su vektoriaus naudojimu testavimo rezultatai
