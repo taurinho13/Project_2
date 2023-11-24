@@ -5,7 +5,7 @@ Projektas 1 v0.3
 
 |                     **CPU**                     |           **RAM**          |     **SSD**     |
 |:-----------------------------------------------:|:--------------------------:|:---------------:|
-| Intel(R) Celeron(R) CPU J3455 @ 1.50GHz 1.50GHz | 6.00 GB (naudotina 5.85GB) | 58.4GB + 29.4GB |
+| Intel(R) Celeron(R) CPU J3455 @ 1.50GHz 1.50GHz | 6.00 GB (naudotina 5.85GB) |     58.4GB      |
 
 # Vector
 
