@@ -39,6 +39,6 @@ void printStudentDataToFile(const list<zmogus>& grupe, int choice, ofstream& out
 void generateStudentFile(int numStudents, int numHomeworks, const std::string& filename);
 void generateStudentFilesAutomatically();
 void calculateGalutinis(zmogus& student);
-void calculateGalutinisForFile(const std::string& filename);
+void calculateGalutinisForFile(const std::string& filename, string rusiavimoKriterijus);
 bool compareStudents(const zmogus& a, const zmogus& b);
 bool rikiavimaspav(const zmogus& a, const zmogus& b);
