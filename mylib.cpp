@@ -336,6 +336,9 @@ void calculateGalutinisForFile(const std::string& filename, string rusiavimoKrit
             iss >> student.vardas >> student.pavarde;
 
             int grade;
+            while (iss >> grade) {
+               student.nd.push_back(grade);
+            }
 
             if (!student.nd.empty()) {
                 student.egz = student.nd.back();
