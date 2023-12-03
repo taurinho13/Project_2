@@ -466,6 +466,18 @@ void calculateGalutinisForFile(const string& filename, string rusiavimoKriteriju
                     ++it;
                 }
             }
+
+            /*
+            auto newEnd = remove_if(students.begin(), students.end(), [](const zmogus& student) {
+                return student.galutinis < 5;
+                });
+
+            copy_if(students.begin(), newEnd, back_inserter(vargsiukai), [](const zmogus& student) {
+                return student.galutinis < 5;
+                });
+
+            students.erase(newEnd, students.end());
+            */
             auto endDivide = std::chrono::high_resolution_clock::now();
 
             std::chrono::duration<double> durationDivide = endDivide - startDivide;
