@@ -337,14 +337,12 @@ void calculateGalutinisForFile(const std::string& filename, string rusiavimoKrit
 
             int grade;
 
-            if (iss >> grade) {
-                student.egz = grade;
-                while (iss >> grade) {
-                    student.nd.push_back(grade);
-                }
+            if (!student.nd.empty()) {
+                student.egz = student.nd.back();
+                student.nd.pop_back();  // Remove the last element from nd since it's now assigned to egz
             }
             else {
-                student.egz = 0;
+                student.egz = 0;  // If no nd grades are present, set egz to 0
             }
 
             calculateGalutinis(student);
