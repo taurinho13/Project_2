@@ -50,7 +50,7 @@ Programoje std::vector<Studentai> pakeičiamas į std::list<Studentai> ir stebim
 |      Padalinimas     |  0.0005952 |  0.0060376 |  0.0674251  |    0.986994   |      14.29     |
 |  kietiakai surašymas |  0.0049674 |  0.0220177 |   0.201933  |    1.97096    |     23.6769    |
 | vargšiukai surašymas |  0.0032952 |  0.015003  |   0.137754  |    1.38223    |     17.4768    |
-|        bendras       |  0.0275905 |  0.1771798 |    1.8577   |    22.3666    |    282.5334    |
+|        bendras       |  0.0275905 |  0.1771798 |    1.8577   |    22.3666    |    244.5334    |
 
 # List su strategija 1, 2, ir 3
 
