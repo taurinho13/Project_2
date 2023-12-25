@@ -32,14 +32,14 @@ Programoje std::vector<Studentai> pakeičiamas į std::list<Studentai> ir stebim
 
 # Vectorius su strategija 2
 
-|    **Testavimas**    | **1 000 ** | **10 000** | **100 000** | **1 000 000** |   **10 000 000**   |
+|    **Testavimas**    | **1 000** | **10 000** | **100 000** | **1 000 000** |   **10 000 000**   |
 |:--------------------:|:----------:|:----------:|:-----------:|:-------------:|:------------------:|
-|      Nuskaitymas     |  0.069818  |  0.106484  |    1.0853   |     10.687    |       113.094      |
+|      Nuskaitymas     |  0.0126317 |  0.106484  |    1.0853   |     10.687    |       113.094      |
 |      Rūšiavimas      |  0.0012471 |  0.0256391 |   0.395775  |    5.43938    |       75.8923      |
 |      Padalinimas     |  0.0021445 |  0.216883  |   28.6432   |    2865.56    | Nepavyko išmatuoti |
 |  kietiakai surašymas |  0.0028807 |  0.0234861 |   0.203199  |    2.13127    | Nepavyko išmatuoti |
 | vargšiukai surašymas |  0.0021379 |  0.0149985 |   0.156963  |     1.4546    | Nepavyko išmatuoti |
-|        bendras       |  0.0782282 |  0.3874907 |  30.484437  |   2885.27225  |                    |
+|        bendras       |  0.0211233 |  0.3874907 |  30.484437  |   2885.27225  |                    |
 
 # Vektorius su strategija 3
 
