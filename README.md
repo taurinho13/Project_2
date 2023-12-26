@@ -7,18 +7,6 @@ Projektas 1 v1.0
 |:----------------------------------------------------:|:----------------------------:|:------------------------:|
 |   Intel(R) Celeron(R) CPUJ3455 @ 1.50 GHz 1.50 GHz   |     6 GB (5.85 naudotina)    | 58.4 GB (laisva 3.37 GB) |
 
-# Versija v0.1:
-Pradinėje programos versijoje, programa nuskaito vartotojų įvestus duomenis. Apdorojami duomenys ir su jais atliekami skaičiavimai, tai yra išvedami studentų vardas ir pavardė, ir jų rezultatai apskaičiuojami pagal formulę: 0.4*vidurkis/mediana + 0.6*egzaminas. Programa taip pat suteikia galimybę vartotojui nuskaityti duomenis iš failo ir sugeneruoti duomenis automatiškai. Programoje duomenys rūšiuojami pagal vardą ar pavardę ir joje taip pat panaudojamas išimčių valdymas.
-
-# Versija v0.2: 
-Patobulinta v0.1: programa kuria nurodyto dydžio failus. Studentų sąrašas padalinamas pagal kriterijų į du konteinerius. Konteineriuose esantys duomenys išvedami į naujus failus. Šioje versijoje atliekamas programos operacijų laiko trukmės matavimas. Taip pat vartotojui suteikiamas pasirinkimas pagal ką rūšiuoti (vardą/pavardę/pažymį).
-
-# Versija v0.3:
-Programoje std::vector<Studentai> pakeičiamas į std::list<Studentai> ir stebimi programos pokyčiai. Atlikus testus su programa savo kompiuteryje buvo pastebėta, kad naudojant <list> duomenų rūšiavimas buvo spartesnis, tačiau kitos operacijos kaip duomenų padalinimas į du konteinerius ir duomenų surašymas į failus užtruko ilgiau nei naudojant <vector>. Šioje versijoje prie studento duomenų išvedamas objekto saugojimo atmintyje adresas. 
-
-# Versija v1.0:
-
-
 # Vectorius su strategija 1
 
 |      Testavimas      |    1 000   |   10 000   |  100 000 | 1 000 000  | 10 000 000 |
@@ -70,3 +58,18 @@ Programoje std::vector<Studentai> pakeičiamas į std::list<Studentai> ir stebim
 |        bendras 1 st.       |  0.0264752 |  0.197736  |    1.9609   |    21.5493    |     372.552    |
 |            2 st.           |  0.0211652 |    0.184   |   1.822626  |    19.56236   |    216.7232    |
 |            3 st.           |  0.0243322 |  0.1742964 |   1.655924  |    18.12688   |     231.734    |
+
+
+# Versija v0.1:
+Pradinėje programos versijoje, programa nuskaito vartotojų įvestus duomenis. Apdorojami duomenys ir su jais atliekami skaičiavimai, tai yra išvedami studentų vardas ir pavardė, ir jų rezultatai apskaičiuojami pagal formulę: 0.4*vidurkis/mediana + 0.6*egzaminas. Programa taip pat suteikia galimybę vartotojui nuskaityti duomenis iš failo ir sugeneruoti duomenis automatiškai. Programoje duomenys rūšiuojami pagal vardą ar pavardę ir joje taip pat panaudojamas išimčių valdymas.
+
+# Versija v0.2: 
+Patobulinta v0.1: programa kuria nurodyto dydžio failus. Studentų sąrašas padalinamas pagal kriterijų į du konteinerius. Konteineriuose esantys duomenys išvedami į naujus failus. Šioje versijoje atliekamas programos operacijų laiko trukmės matavimas. Taip pat vartotojui suteikiamas pasirinkimas pagal ką rūšiuoti (vardą/pavardę/pažymį).
+
+# Versija v0.3:
+Programoje std::vector<Studentai> pakeičiamas į std::list<Studentai> ir stebimi programos pokyčiai. Atlikus testus su programa savo kompiuteryje buvo pastebėta, kad naudojant <list> duomenų rūšiavimas buvo spartesnis, tačiau kitos operacijos kaip duomenų padalinimas į du konteinerius ir duomenų surašymas į failus užtruko ilgiau nei naudojant <vector>. Šioje versijoje prie studento duomenų išvedamas objekto saugojimo atmintyje adresas. 
+
+# Versija v1.0:
+Iš praeitų versijų dviems konteinerių tipams (vector ir list) buvo taikoma viena studentų dalijimo į dvi kategorijas strategija. Versijoje 1.0 naudojamos dvi naujos dalijimo strategijos ir matuojama visų trijų strategijų sparta. Pirmoji - studentų konteineris padalijamas į du naujus konteinerius: kietiakai ir vargšiukai. Antroji strategija sukuria tik vieną naują konteinerį vargšiukai, ištrindama vargšiukus iš pradinio konteinerio ir jame palikdama tik kietiakus. Trečioji strategija yra spartesnės strategijos iš pirmų dviejų patobulinimas. Matuojant strategijų spartumą su vektoriumi pastebėjau, kad mano pirmoji strategija buvo greitesnė, todėl patobulinau ją panaudodamas algoritmą partition ir copy. Partition algoritmas suskirsto pradinį vektorių į dvi dalis pagal nurodytą sąlygą. Elementai tenkinantys sąlygą surikiuojami į pirmąją vektoriaus dalį, o netenkinantys patenka į antrąją. Tada copy algoritmas nukopijuoja pirmoje dalyje esančius elementus į naują vektorių, o likusius į kitą naują vektorių.  
+
+Naudojimosi instrukcija: 
