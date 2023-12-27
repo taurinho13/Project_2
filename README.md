@@ -1,6 +1,25 @@
 # Projektas 1
 Projektas 1 v1.0
 
+# Programos paleidimo instrukcija
+1. Tuščiame aplanke sukuriame du naujus aplankus: Incude ir src. Į 'Include' aplanką sukeliame header failus (pch.h), o į 'src'
+visus programos cpp failus (main.cpp, pch.cpp), bei tekstinius failus su duomenimis. Bendrame aplanke turi būti CMakeLists.txt failas ir pagal pasirinkimą galima sukurti RUNMEE.bat failą su komandomis kurios reikalingos norint paleisti programai. Tame pačiame faile yra ir CMake programos instaliatorius.
+<img width="687" alt="Screenshot 2023-12-27 212048" src="https://github.com/taurinho13/My-first-project/assets/146191931/c2f5e128-94d5-44ec-b231-64406b88850d">
+2. Įjungiame powershell:
+<img width="687" alt="Screenshot 2023-12-27 212638" src="https://github.com/taurinho13/My-first-project/assets/146191931/d845bbd6-aead-4dc0-b18b-8ca01d4182c9">
+3. Tuomet suvedamos komandos: cmake CMakeLists.txt; cmake --install . ; cmake --build . ;
+<img width="854" alt="Screenshot 2023-12-27 213127" src="https://github.com/taurinho13/My-first-project/assets/146191931/ac0c7ddb-4eb7-420d-bda5-9501e9838d46">
+4. Programa dar neveiks, nes aplanke iš kurio vykdoma programa, nėra failų su duomenimis kuriuos programa apdoroja, todėl juos nukopijuojame iš 'src' į 'Debug' aplanką: copy src\students_1000.txt Debug\students_1000.txt; copy src\students_10000.txt Debug\students_10000.txt; copy src\students_100000.txt Debug\students_100000.txt
+<img width="850" alt="Screenshot 2023-12-27 213713" src="https://github.com/taurinho13/My-first-project/assets/146191931/fe33fba7-bcfc-451e-a2a6-b3cb21e11bed">
+Tuomet nueiname į Debug aplanką ir paleidžiame exe failą:
+<img width="687" alt="image" src="https://github.com/taurinho13/My-first-project/assets/146191931/5054853c-9bca-4aa7-abce-da25c89bf6b8">
+arba ją paleidžiame per komandinę eilutę:
+<img width="837" alt="Screenshot 2023-12-27 214116" src="https://github.com/taurinho13/My-first-project/assets/146191931/eb3baf12-2af9-45e2-87d4-0e844a2030e1">
+ir programa pradeda darbą. Pirmuoju atveju programa paleidžiama per Command Prompt, antruoju per Powershell
+Alternatyviai paleisti programą galima antrame žingsnyje įjungus powershell panaudojant bat failą kuriame yra visos aukščiau išvardintos komandos. Tam panaudojama komanda .\RUNMEE.bat:
+<img width="614" alt="Screenshot 2023-12-27 215217" src="https://github.com/taurinho13/My-first-project/assets/146191931/208e332e-36d4-4190-938a-b6c1d542d4f5">
+
+
 # Parametrai
 
 |                        **CPU**                       |            **RAM**           |          **SSD**         |
