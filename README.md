@@ -7,19 +7,19 @@ visus programos cpp failus (main.cpp, pch.cpp), bei tekstinius failus su duomeni
 
 <img width="687" alt="Screenshot 2023-12-27 212048" src="https://github.com/taurinho13/My-first-project/assets/146191931/c2f5e128-94d5-44ec-b231-64406b88850d">
 
-3. Įjungiame powershell:
+2. Įjungiame powershell:
    
 <img width="687" alt="Screenshot 2023-12-27 212638" src="https://github.com/taurinho13/My-first-project/assets/146191931/d845bbd6-aead-4dc0-b18b-8ca01d4182c9">
 
-4. Tuomet suvedamos komandos: cmake CMakeLists.txt; cmake --install . ; cmake --build . ;
+3. Tuomet suvedamos komandos: cmake CMakeLists.txt; cmake --install . ; cmake --build . ;
 
 <img width="854" alt="Screenshot 2023-12-27 213127" src="https://github.com/taurinho13/My-first-project/assets/146191931/ac0c7ddb-4eb7-420d-bda5-9501e9838d46">
 
-5. Programa dar neveiks, nes aplanke iš kurio vykdoma programa, nėra failų su duomenimis kuriuos programa apdoroja, todėl juos nukopijuojame iš 'src' į 'Debug' aplanką: copy src\students_1000.txt Debug\students_1000.txt; copy src\students_10000.txt Debug\students_10000.txt; copy src\students_100000.txt Debug\students_100000.txt
+4. Programa dar neveiks, nes aplanke iš kurio vykdoma programa, nėra failų su duomenimis kuriuos programa apdoroja, todėl juos nukopijuojame iš 'src' į 'Debug' aplanką: copy src\students_1000.txt Debug\students_1000.txt; copy src\students_10000.txt Debug\students_10000.txt; copy src\students_100000.txt Debug\students_100000.txt
  
 <img width="850" alt="Screenshot 2023-12-27 213713" src="https://github.com/taurinho13/My-first-project/assets/146191931/fe33fba7-bcfc-451e-a2a6-b3cb21e11bed">
 
-6. Tuomet nueiname į Debug aplanką ir paleidžiame exe failą:
+5. Tuomet nueiname į Debug aplanką ir paleidžiame exe failą:
 
 <img width="687" alt="image" src="https://github.com/taurinho13/My-first-project/assets/146191931/5054853c-9bca-4aa7-abce-da25c89bf6b8">
 
