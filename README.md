@@ -146,3 +146,9 @@ naudojant class
 |        Bendras       |    3.061674s   |     28.56338s    |     2.11537s   |     25.32398s    |    2.142508s   |     25.4439s     |
 
 list struct failo dydis be flag'ų: 108KB; list class: 114KB
+
+| **flags** | **struct** | **class** |
+|:---------:|:----------:|:---------:|
+|     O1    |    64KB    |    73KB   |
+|     O2    |    78KB    |    86KB   |
+|     O3    |    80KB    |    86KB   |
