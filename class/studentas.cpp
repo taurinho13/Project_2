@@ -55,7 +55,7 @@ void processLine(const string& line, list<zmogus>& grupe) {
     }
 
     else {
-        cerr << "Invalid input format in the file." << endl;
+        cerr << "Netinkamas duomenu formatas." << endl;
         return;
     }
     
@@ -151,21 +151,21 @@ void inputStudentData(list<zmogus>& grupe) {
 
                         while (cin >> k) {
                             if (k < 0 || k > 10) {
-                                throw out_of_range("Invalid input. Please enter a number between 0 and 10.");
+                                throw out_of_range("Netinkamai ivestas skaicius. Iveskites skaiciu tarp 0 ir 10.");
                             }
                             laikinas.addPazymys(k);
 
                             if (cin.peek() == '\n') {
-                                cin.ignore(); // Ignore the newline character
+                                cin.ignore();
                                 break;
                             }
                         }
 
-                        break; // Exit the loop if all inputs were valid
+                        break; 
                     }
                     catch (const out_of_range& e) {
                         cerr << e.what() << endl;
-                        laikinas.clearND(); // Clear the vector if an error occurred
+                        laikinas.clearND(); 
                     }
                     catch (const exception& e) {
                         cerr << "An exception occurred: " << e.what() << endl;
@@ -211,7 +211,7 @@ void printStudentData(const list<zmogus>& grupe, int choice) {
         std::cout << setw(10) << std::left << "med.)";
     }
 
-    std::cout << setw(15) << "Address" << endl;
+    std::cout << setw(15) << "Adresas" << endl;
 
     std::cout << std::setfill('-') << std::setw(60) << "-" << std::setfill(' ') << std::endl;
 
@@ -291,7 +291,7 @@ void generateStudentFilesAutomatically() {
 
         ifstream fileCheck(filenames[i]);
         if (fileCheck.good()) {
-            std::cout << "File " << filenames[i] << " already exists. Skipping generation." << endl;
+            std::cout << "File " << filenames[i] << " failas egzistuoja. Kurimas praleidziamas." << endl;
         }
         else {
             auto start = chrono::high_resolution_clock::now();
