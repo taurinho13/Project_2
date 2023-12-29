@@ -122,3 +122,18 @@ testavimas programų operacijų trukmės su list naudojančią struct ir naudoja
 | Vargšiukai surašymas |      0.1579266 s     |     0.1505388 s     |       1.574678 s       |        1.683 s        |
 |        Bendras       |       1.74075 s      |      2.80565 s      |       19.20606 s       |       27.28464 s      |
 
+
+Testavimas su priklausomybe nuo kompiliatoriaus optimizavimo su list naudojant struct
+
+
+
+
+naudojant class
+|    **Testavimas**    | **100 000 O1** | **1 000 000 O1** | **100 000 O2** | **1 000 000 O2** | **100 000 O3** | **1 000 000 O3** |
+|:--------------------:|:--------------:|:----------------:|:--------------:|:----------------:|:--------------:|:----------------:|
+|      Nuskaitymas     |    1.924606s   |     13.40491s    |     1.0423s    |     11.05904s    |    1.055416s   |     10.9818s     |
+|      Rūšiavimas      |    0.6403236s  |      9.53741s    |    0.6024054s  |      8.9259s     |   0.6159908s   |     9.06301s     |
+|      Padalinimas     |    0.1043056s  |     1.21553s     |   0.09920224s  |     1.198122s    |   0.10051744s  |     1.20797s     |
+|  Kietiakai surašymas |    0.234864s   |      2.62226s    |    0.2234832s  |     2.485396s    |   0.2222678s   |     2.51677s     |
+| Vargšiukai surašymas |    0.157575s   |     1.783294s    |    0.1479778s  |     1.655514s    |   0.1483184s   |     1.67435s     |
+|        Bendras       |    3.061674s   |     28.56338s    |     2.11537s   |     25.32398s    |    2.142508s   |     25.4439s     |
