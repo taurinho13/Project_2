@@ -144,3 +144,5 @@ naudojant class
 |  Kietiakai surašymas |    0.234864s   |      2.62226s    |    0.2234832s  |     2.485396s    |   0.2222678s   |     2.51677s     |
 | Vargšiukai surašymas |    0.157575s   |     1.783294s    |    0.1479778s  |     1.655514s    |   0.1483184s   |     1.67435s     |
 |        Bendras       |    3.061674s   |     28.56338s    |     2.11537s   |     25.32398s    |    2.142508s   |     25.4439s     |
+
+list struct failo dydis be flag'ų: 108KB; list class: 114KB
