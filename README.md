@@ -109,3 +109,16 @@ Išmatavęs strategijų veikimo trukmę abiejų konteinerių atveju pastebėjau 
 
 Naudojimosi instrukcija: 
 Paleidus programą, vartotojas pasirenka ar duomenys generuojami automatiškai ar skaitomi iš failo. Pasirinkus opciją skaityti iš failo vartotojui tuomet leidžiama rinktis ar skaityti iš failo ar duomenis įvesti pačiam. Pirmame žingsnyje pasirinkus automatinį duomenų generavimą, vartotojas renkasi pagal ką bus rūšiuojami duomenys: pagal vardą, pavardę ar galutinį įvertinimą. Galiausiai vartotojas pasirenka strategiją pagal kurią bus apdorojami duomenys. Tuomet programa tikrina ar norimi sukurti failai jau egzistuoja, jei taip, tuomet failu kurimas praleidžiamas. 
+
+# Versija v1.1:
+testavimas programų operacijų trukmės su list naudojančią struct ir naudojančios class
+
+|    **Testavimas**    | **100 000 (struct)** | **100 000 (class)** | **1 000 000 (struct)** | **1 000 000 (class)** |
+|:--------------------:|:--------------------:|:-------------------:|:----------------------:|:---------------------:|
+|      Nuskaitymas     |      1.060608 s      |      1.687356 s     |       10.96734 s       |       12.7896 s       |
+|      Rūšiavimas      |      0.1943938 s     |     0.6281548 s     |        3.11798 s       |       9.068438 s      |
+|      Padalinimas     |     0.09983484 s     |     0.10263866 s    |       1.198092 s       |       1.212832 s      |
+|  Kietiakai surašymas |      0.2279868 s     |     0.2369668 s     |       2.347954 s       |       2.530776 s      |
+| Vargšiukai surašymas |      0.1579266 s     |     0.1505388 s     |       1.574678 s       |        1.683 s        |
+|        Bendras       |       1.74075 s      |      2.80565 s      |       19.20606 s       |       27.28464 s      |
+
