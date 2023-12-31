@@ -13,6 +13,93 @@ istream& zmogus::readzmogus(istream& is) {
     return is;
 }
 
+istream& operator>>(istream& is, zmogus& student)
+{
+    cout << "Iveskite varda ir pavarde: ";
+    is >> student.vardas >> student.pavarde;
+
+    int ndskaicius;
+    cout << "Iveskite kiek namu darbu turi zmogus (jei nenorite ivesti, "
+            "palikite tuscia ir spauskite Enter): ";
+    cin.ignore();
+    string nInput;
+    getline(is, nInput);
+    if (!nInput.empty()) {
+        istringstream iss(nInput);
+        iss >> ndskaicius;
+
+        if (ndskaicius > 0) {
+          cout << "Iveskite namu darbu pazymius (atskirkite ivertinimus "
+                  "tarpais): ";
+          for (int i = 0; i < ndskaicius; ++i) {
+            int pazymys;
+            is >> pazymys;
+            student.addPazymys(pazymys);
+          }
+        }
+    } else {
+        cout << "Ar sugeneruoti namu darbu ir egzamino pazymius? (1 - Taip, 0 "
+                "- Ne): ";
+        int generate;
+        is >> generate;
+        if (generate) {
+          cout
+            << "Ar norite pasirinkti namu darbu skaiciu? (1 - Taip, 0 - Ne): ";
+          int chooseN;
+          is >> chooseN;
+          if (chooseN) {
+            cout << "Iveskite namu darbu skaiciu: ";
+            is >> ndskaicius;
+          } else {
+            ndskaicius = rand() % 10 + 1;
+          }
+          cout << "Sugeneruotas namu darbu kiekis: " << ndskaicius << endl;
+          cout << "Sugeneruoti namu darbu pazymiai: ";
+          generateRandomGrades(student, ndskaicius);
+          
+
+          cout << endl;
+
+          student.setEgzaminas(rand() % 10 + 1);
+          cout << "Sugeneruotas egzamino pazymys: " << student.getEgzaminas()
+               << endl;
+          calculateAverage(student);
+          calculateGalutinis(student);
+
+        } else {
+          cout << "Iveskite namu darbu pazymius (atskirkite ivertinimus "
+                  "tarpais baigti - spauskite Enter): ";
+          int k;
+
+          while (is >> k) {
+            if (k < 0 || k > 10) {
+              throw out_of_range(
+                "Invalid input. Please enter a number between 0 and 10.");
+            }
+            student.addPazymys(k);
+
+            if (is.peek() == '\n') {
+              is.ignore(); // Ignore the newline character
+              break;
+            }
+          }
+          calculateAverage(student);
+        }
+    }
+    if (student.getEgzaminas() == 0) {
+        // If not, prompt for exam score
+        cout << "Iveskite egzamino bala: ";
+        is >> student.egz;
+
+        // Additional logic for calculating average, median, and final grade if
+        // needed
+        calculateMedian(student);
+        calculateGalutinis(student);
+    }
+
+    return is;
+}
+
 void processFileData(list<zmogus>& grupe) {
 
     string fileName;
@@ -33,7 +120,8 @@ void processFileData(list<zmogus>& grupe) {
 
     input.close();
 }
-void processLine(const string& line, list<zmogus>& grupe) {
+void processLine(const string& line, list<zmogus>& grupe)
+{
     istringstream ss(line);
     zmogus laikinas;
 
@@ -41,8 +129,6 @@ void processLine(const string& line, list<zmogus>& grupe) {
     int nd1, nd2, nd3, nd4, egz;
 
     if (ss >> vardas >> pavarde >> nd1 >> nd2 >> nd3 >> nd4 >> egz) {
-        
-
         laikinas.setVardas(vardas);
         laikinas.setPavarde(pavarde);
         laikinas.addPazymys(nd1);
@@ -52,21 +138,17 @@ void processLine(const string& line, list<zmogus>& grupe) {
         laikinas.setEgzaminas(egz);
 
         grupe.push_back(laikinas);
-    }
 
-    else {
-        cerr << "Netinkamas duomenu formatas." << endl;
-        return;
-    }
-    
-    for (auto& zmogus : grupe) {
+        // Processing inside the if block
         calculateAverage(laikinas);
         calculateMedian(laikinas);
+        laikinas.clearND();
+    } else {
+        cerr << "Invalid input format in the file." << endl;
+        return;
     }
-
-    grupe.push_back(laikinas);
-    laikinas.clearND();
 }
+
 void calculateMedian(zmogus& zmog) {
     list<int> sort_nd = zmog.getPaz();
     sort_nd.sort();
@@ -95,7 +177,9 @@ void calculateAverage(zmogus& zmog) {
     }
     vidurkis = (vidurkis / zmog.getPaz().size());
 }
-void inputStudentData(list<zmogus>& grupe) {
+
+/* void inputStudentData(list<zmogus>& grupe)
+{
     int zmoniu_sk;
     std::cout << "Iveskite mokiniu skaiciu: ";
     cin >> zmoniu_sk;
@@ -151,21 +235,21 @@ void inputStudentData(list<zmogus>& grupe) {
 
                         while (cin >> k) {
                             if (k < 0 || k > 10) {
-                                throw out_of_range("Netinkamai ivestas skaicius. Iveskites skaiciu tarp 0 ir 10.");
+                                throw out_of_range("Invalid input. Please enter a number between 0 and 10.");
                             }
                             laikinas.addPazymys(k);
 
                             if (cin.peek() == '\n') {
-                                cin.ignore();
+                                cin.ignore(); // Ignore the newline character
                                 break;
                             }
                         }
 
-                        break; 
+                        break; // Exit the loop if all inputs were valid
                     }
                     catch (const out_of_range& e) {
                         cerr << e.what() << endl;
-                        laikinas.clearND(); 
+                        laikinas.clearND(); // Clear the vector if an error occurred
                     }
                     catch (const exception& e) {
                         cerr << "An exception occurred: " << e.what() << endl;
@@ -200,6 +284,19 @@ void inputStudentData(list<zmogus>& grupe) {
         grupe.push_back(laikinas);
         laikinas.clearND();
     }
+}*/
+
+void inputStudentData(list<zmogus>& grupe)
+{
+    int zmoniu_sk;
+    cout << "Iveskite mokiniu skaiciu: ";
+    cin >> zmoniu_sk;
+
+    for (int j = 0; j < zmoniu_sk; ++j) {
+        zmogus laikinas;
+        cin >> laikinas; // Utilize the overloaded operator
+        grupe.push_back(laikinas);
+    }
 }
 void printStudentData(const list<zmogus>& grupe, int choice) {
     std::cout << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(10) << "Galutinis (";
@@ -211,7 +308,7 @@ void printStudentData(const list<zmogus>& grupe, int choice) {
         std::cout << setw(10) << std::left << "med.)";
     }
 
-    std::cout << setw(15) << "Adresas" << endl;
+    std::cout << setw(15) << "Address" << endl;
 
     std::cout << std::setfill('-') << std::setw(60) << "-" << std::setfill(' ') << std::endl;
 
@@ -291,7 +388,7 @@ void generateStudentFilesAutomatically() {
 
         ifstream fileCheck(filenames[i]);
         if (fileCheck.good()) {
-            std::cout << "File " << filenames[i] << " failas egzistuoja. Kurimas praleidziamas." << endl;
+            std::cout << "File " << filenames[i] << " already exists. Skipping generation." << endl;
         }
         else {
             auto start = chrono::high_resolution_clock::now();
@@ -476,7 +573,6 @@ void calculateGalutinisForFile(const string& filename, string rusiavimoKriteriju
         }
 
         else if (strategija == 2) {
-
             list<zmogus> vargsiukai;
 
             auto startDivision = std::chrono::high_resolution_clock::now();
@@ -720,4 +816,91 @@ void zmogus::calculateGalutinis() {
         galutinis = egz * 0.6;
     }
 }*/
+/*istream& operator>>(istream& is, zmogus& student)
+{
+    cout << "Iveskite varda ir pavarde: ";
+    is >> student.vardas >> student.pavarde;
 
+    int ndskaicius;
+    cout << "Iveskite kiek namu darbu turi zmogus (jei nenorite ivesti, "
+            "palikite tuscia ir spauskite Enter): ";
+    cin.ignore();
+    string nInput;
+    getline(is, nInput);
+    if (!nInput.empty()) {
+        istringstream iss(nInput);
+        iss >> ndskaicius;
+    } else {
+        cout << "Ar sugeneruoti namu darbu ir egzamino pazymius? (1 - Taip, 0 "
+                "- Ne): ";
+        int generate;
+        is >> generate;
+        if (generate) {
+          cout
+            << "Ar norite pasirinkti namu darbu skaiciu? (1 - Taip, 0 - Ne): ";
+          int chooseN;
+          is >> chooseN;
+          if (chooseN) {
+            cout << "Iveskite namu darbu skaiciu: ";
+            is >> ndskaicius;
+          } else {
+            ndskaicius = rand() % 10 + 1;
+          }
+          cout << "Sugeneruotas namu darbu kiekis: " << ndskaicius << endl;
+          cout << "Sugeneruoti namu darbu pazymiai: ";
+          generateRandomGrades(student, ndskaicius);
+
+          cout << endl;
+
+          student.setEgzaminas(rand() % 10 + 1);
+          cout << "Sugeneruotas egzamino pazymys: " << student.getEgzaminas()
+               << endl;
+        } 
+        else {
+          cout << "Iveskite namu darbu pazymius (atskirkite ivertinimus "
+                  "tarpais baigti - spauskite Enter): ";
+          int k;
+
+          while (is >> k) {
+            if (k < 0 || k > 10) {
+              throw out_of_range(
+                "Invalid input. Please enter a number between 0 and 10.");
+            }
+            student.addPazymys(k);
+
+            if (is.peek() == '\n') {
+              is.ignore(); // Ignore the newline character
+              break;
+            }
+          }
+
+          // Additional logic for calculating average, median, and final grade
+          // if needed
+          calculateAverage(student);
+          calculateMedian(student);
+          student.setGalutinis(student.getVid());
+          return is;
+        }
+    }
+
+    if (ndskaicius > 0) {
+        cout
+          << "Iveskite namu darbu pazymius (atskirkite ivertinimus tarpais): ";
+        for (int i = 0; i < ndskaicius; ++i) {
+          int pazymys;
+          is >> pazymys;
+          student.addPazymys(pazymys);
+        }
+    }
+
+    cout << "Iveskite egzamino bala: ";
+    is >> student.egz;
+
+    // Additional logic for calculating average, median, and final grade if
+    // needed
+    calculateAverage(student);
+    calculateMedian(student);
+    student.setGalutinis(student.getVid());
+
+    return is;
+}*/
