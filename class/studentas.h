@@ -38,6 +38,8 @@ public:
 
     ~zmogus() {}
 
+    friend istream& operator>>(istream& is, zmogus& student)
+
     void setVardas(const string& v) { vardas = v; }
     void setPavarde(const string& p) { pavarde = p; }
     void setEgzaminas(int egzaminas) { egz = egzaminas; }
