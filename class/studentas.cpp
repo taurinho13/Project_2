@@ -123,6 +123,9 @@ void processFileData(list<zmogus>& grupe) {
 }
 void processLine(const string& line, list<zmogus>& grupe)
 {
+    if (line.find("Vardas") != string::npos ||
+        line.find("Pavarde") != string::npos)
+        return;
     istringstream ss(line);
     zmogus laikinas;
 
@@ -141,9 +144,10 @@ void processLine(const string& line, list<zmogus>& grupe)
         grupe.push_back(laikinas);
 
         // Processing inside the if block
-        calculateAverage(laikinas);
+        /* calculateAverage(laikinas);
         calculateMedian(laikinas);
-        laikinas.clearND();
+        laikinas.clearND();*/
+
     } else {
         cerr << "Invalid input format in the file." << endl;
         return;
@@ -177,6 +181,9 @@ void calculateAverage(zmogus& zmog) {
         vidurkis += paz;
     }
     vidurkis = (vidurkis / zmog.getPaz().size());
+    zmog.setVid(vidurkis);
+    cout << "Debug: Calculate Average for " << zmog.getVardas() << " "
+         << zmog.getPavarde() << ": " << zmog.getVid() << endl;
 }
 
 /* void inputStudentData(list<zmogus>& grupe)
@@ -346,7 +353,7 @@ void generateRandomGrades(zmogus& zmog, int ndskaicius) {
         zmog.addPazymys(k);
     }
 }
-void printStudentDataToFile(const list<zmogus>& grupe, int choice,
+/* void printStudentDataToFile(const list<zmogus>& grupe, int choice,
                                  ofstream& outputFile)
 {
     outputFile << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(10) << "Galutinis (";
@@ -361,6 +368,7 @@ void printStudentDataToFile(const list<zmogus>& grupe, int choice,
     outputFile << endl;
 
     for (const auto& zmogus : grupe) {
+        
         outputFile << std::left << setw(15) << zmogus.getVardas() << setw(15) << zmogus.getPavarde() << setw(20);
 
         if (choice == 1) {
@@ -373,7 +381,56 @@ void printStudentDataToFile(const list<zmogus>& grupe, int choice,
         }
         outputFile << endl;
     }
+}*/
+void printStudentDataToFile( const list<zmogus>& grupe,
+                                 int choice,
+                            ofstream& outputFile)
+{
+    outputFile << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde"
+               << setw(10) << "Galutinis (";
+
+    if (choice == 1) {
+        outputFile << std::left << "vid.)";
+    } else if (choice == 2) {
+        outputFile << std::left << "med.)";
+    }
+
+    outputFile << endl;
+
+    for (const zmogus& student : grupe) {
+        outputFile << std::left << setw(15) << student.getVardas() << setw(15)
+                   << student.getPavarde() << setw(20);
+
+        if (choice == 1) {
+            calculateAverage(const_cast<zmogus&>(student));
+            float vid = student.getVid();
+            int egz = student.getEgzaminas();
+            float galutinis = vid * 0.4 + egz * 0.6;
+
+            // Debug prints
+            cout << "Debug: Vardas: " << student.getVardas()
+                 << " Pavarde: " << student.getPavarde() << " Vid: " << vid
+                 << " Egzaminas: " << egz << " Galutinis: " << galutinis
+                 << endl;
+
+            outputFile << fixed <<  galutinis << setprecision(2);
+        } else if (choice == 2) {
+            float med = student.getMed();
+            int egz = student.getEgzaminas();
+            float galutinis = med * 0.4 + egz * 0.6;
+
+            // Debug prints
+            cout << "Debug: Vardas: " << student.getVardas()
+                 << " Pavarde: " << student.getPavarde() << " Mediana: " << med
+                 << " Egzaminas: " << egz << " Galutinis: " << galutinis
+                 << endl;
+
+            outputFile << fixed << galutinis << setprecision(2);
+        }
+        outputFile << endl;
+    }
 }
+
 
 void generateStudentFilesAutomatically() {
     int numStudents[] = { 1000, 10000, 100000, 1000000, 10000000 };
