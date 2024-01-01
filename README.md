@@ -152,3 +152,20 @@ list struct failo dydis be flag'ų: 108KB; list class: 114KB
 |     O1    |    64KB    |    73KB   |
 |     O2    |    78KB    |    86KB   |
 |     O3    |    80KB    |    86KB   |
+
+
+# Versija v1.2:
+Šioje versijoje vykdomas įvesties (>>) ir išvesties (<<) operatorių perdengimas. Šioje versijoje užtikrinama, kad klasėje galiotų "Rule Of Three" taisyklė, kuri teigia, jeigu naudojamas vienas iš šių: kopijavimo konstruktorius, kopijavimo priskyrimo konstruktorius arba destruktorius, tuomet turi būti panaudoti ir kiti du, norint, kad kopijavimas vyktų tinkamai. 
+
+Klasė mano programoje su friend funkcijomis reikalingomis įvykdyti operatorių perdengimą, bei copy konstruktorius, copy assignment konstruktorius ir destruktorius: 
+<img width="960" alt="klase" src="https://github.com/taurinho13/Project_2/assets/146191931/3fedeac2-7e10-45ab-a04e-444dbe800899">
+
+Įvesties operatoriaus apibrėžimas ir jo naudojimas inputStudentData funkcijoje:
+<img width="960" alt="operatoriusIN" src="https://github.com/taurinho13/Project_2/assets/146191931/cd1a5385-0f49-410a-8225-e027a0cc224a">
+operatoriaus iškvietimas fukcijoje:
+<img width="292" alt="operatoriaus_naudojimas" src="https://github.com/taurinho13/Project_2/assets/146191931/a5a28d6c-18d3-4cc4-902d-636a1ea3e4e4">
+
+rule of three patikrinimas:
+<img width="960" alt="ruleOfThree" src="https://github.com/taurinho13/Project_2/assets/146191931/3ab0e050-81da-41eb-bd3c-8e228079040e">
+
+
