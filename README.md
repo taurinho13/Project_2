@@ -171,4 +171,12 @@ rule of three patikrinimas:
 
 # Versija v1.5:
 Iš turimos vienos klasės 'zmogus' sukuriamos dvi naujos klasės: bazinė klasė 'Person' ir jos išvestinė klasė 'zmogus'. 'Person' klasėje aprašyta bendresnė informacija kaip vardas ir pavardė, o detalesnė informacija kaip pažymiai aprašyti išvestinėje klasėje 'zmogus'. Šioje versijoje įvykdoma, kad 'Person' klasė būtų apbstrakčioji, tai yra jos klasės tipo objektų kūrimas neleidžiamas.
+Abi klasės kode: 
+<img width="960" alt="klases_abi" src="https://github.com/taurinho13/Project_2/assets/146191931/e2a12f76-c4b8-4ab3-81dc-96c0b65c8941">
+
+Kuriant bazinės klasės objektą gaunama klaida, nes toks veiksmas neleistinas:
+<img width="960" alt="person_ne" src="https://github.com/taurinho13/Project_2/assets/146191931/05b98417-cb14-4233-bfb9-ebcf776f8775">
+
+užkomentavus ankstesnyjį veiksmą ir kuriant objektą pasinaudojus išvestine 'zmogus' klase objektas sukuriamas ir išvedamas su virtualia funkcija:
+<img width="960" alt="zmog_obj" src="https://github.com/taurinho13/Project_2/assets/146191931/a8ed45ce-5121-40fb-bbae-aa64391305d3">
 
