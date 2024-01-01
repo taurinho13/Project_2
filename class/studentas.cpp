@@ -353,35 +353,6 @@ void generateRandomGrades(zmogus& zmog, int ndskaicius) {
         zmog.addPazymys(k);
     }
 }
-/* void printStudentDataToFile(const list<zmogus>& grupe, int choice,
-                                 ofstream& outputFile)
-{
-    outputFile << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(10) << "Galutinis (";
-
-    if (choice == 1) {
-        outputFile << std::left << "vid.)";
-    }
-    else if (choice == 2) {
-        outputFile << std::left << "med.)";
-    }
-
-    outputFile << endl;
-
-    for (const auto& zmogus : grupe) {
-        
-        outputFile << std::left << setw(15) << zmogus.getVardas() << setw(15) << zmogus.getPavarde() << setw(20);
-
-        if (choice == 1) {
-            float galutinis = zmogus.getVid() * 0.4 + zmogus.getEgzaminas() * 0.6;
-            outputFile << fixed << galutinis << setprecision(2);
-        }
-        else if (choice == 2) {
-            float galutinis = zmogus.getMed() * 0.4 + zmogus.getEgzaminas() * 0.6;
-            outputFile << fixed << galutinis << setprecision(2);
-        }
-        outputFile << endl;
-    }
-}*/
 void printStudentDataToFile( const list<zmogus>& grupe,
                                  int choice,
                             ofstream& outputFile)
