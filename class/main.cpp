@@ -2,6 +2,29 @@
 
 
 int main() {
+
+  zmogus obj1;
+  obj1.setVardas("Petras");
+  obj1.setPavarde("Giedraitis");
+  obj1.addPazymys(2);
+  obj1.addPazymys(3);
+  obj1.addPazymys(5);
+  obj1.addPazymys(1);
+  obj1.setEgzaminas(6);
+
+
+  obj1.calculateGalutinis(obj1);
+
+  zmogus obj2 = obj1;
+  zmogus obj3;
+  obj3 = obj1;
+
+  cout << "Informacija apie obj1 " << obj1 << endl;
+  cout << "Informacija apie obj2 " << obj2 << endl;
+  cout << "Informacija apie obj3 " << obj3 << endl;
+
+  //----------------------
+
     string choice;
     cout << "Pasirinkite operacija (auto/file): ";
     cin >> choice;
@@ -33,6 +56,8 @@ int main() {
             ofstream outputFile("output.txt");
             printStudentDataToFile(grupe, choice, outputFile);
             outputFile.close();
+
+            cout << "Atsakymai irasyti i output.txt faila." << endl;
         }
         else {
             inputStudentData(grupe);
