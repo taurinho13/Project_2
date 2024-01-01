@@ -3,6 +3,10 @@
 
 int main() {
 
+  //Person student;
+  
+  
+
   zmogus obj1;
   obj1.setVardas("Petras");
   obj1.setPavarde("Giedraitis");
