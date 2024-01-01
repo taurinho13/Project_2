@@ -63,8 +63,8 @@ istream& operator>>(istream& is, zmogus& student)
           student.setEgzaminas(rand() % 10 + 1);
           cout << "Sugeneruotas egzamino pazymys: " << student.getEgzaminas()
                << endl;
-          calculateAverage(student);
-          calculateGalutinis(student);
+         calculateAverage(student);
+         calculateGalutinis(student);
 
         } else {
           cout << "Iveskite namu darbu pazymius (atskirkite ivertinimus "
@@ -94,6 +94,7 @@ istream& operator>>(istream& is, zmogus& student)
         // Additional logic for calculating average, median, and final grade if
         // needed
         calculateMedian(student);
+        calculateAverage(student);
         calculateGalutinis(student);
     }
 
@@ -298,7 +299,10 @@ void inputStudentData(list<zmogus>& grupe)
         grupe.push_back(laikinas);
     }
 }
-void printStudentData(const list<zmogus>& grupe, int choice) {
+
+
+ void printStudentData(const list<zmogus>& grupe, int choice)
+{
     std::cout << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(10) << "Galutinis (";
 
     if (choice == 1) {
@@ -342,7 +346,9 @@ void generateRandomGrades(zmogus& zmog, int ndskaicius) {
         zmog.addPazymys(k);
     }
 }
-void printStudentDataToFile(const list<zmogus>& grupe, int choice, ofstream& outputFile) {
+void printStudentDataToFile(const list<zmogus>& grupe, int choice,
+                                 ofstream& outputFile)
+{
     outputFile << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(10) << "Galutinis (";
 
     if (choice == 1) {
@@ -815,92 +821,4 @@ void zmogus::calculateGalutinis() {
         vid = 0.0;
         galutinis = egz * 0.6;
     }
-}*/
-/*istream& operator>>(istream& is, zmogus& student)
-{
-    cout << "Iveskite varda ir pavarde: ";
-    is >> student.vardas >> student.pavarde;
-
-    int ndskaicius;
-    cout << "Iveskite kiek namu darbu turi zmogus (jei nenorite ivesti, "
-            "palikite tuscia ir spauskite Enter): ";
-    cin.ignore();
-    string nInput;
-    getline(is, nInput);
-    if (!nInput.empty()) {
-        istringstream iss(nInput);
-        iss >> ndskaicius;
-    } else {
-        cout << "Ar sugeneruoti namu darbu ir egzamino pazymius? (1 - Taip, 0 "
-                "- Ne): ";
-        int generate;
-        is >> generate;
-        if (generate) {
-          cout
-            << "Ar norite pasirinkti namu darbu skaiciu? (1 - Taip, 0 - Ne): ";
-          int chooseN;
-          is >> chooseN;
-          if (chooseN) {
-            cout << "Iveskite namu darbu skaiciu: ";
-            is >> ndskaicius;
-          } else {
-            ndskaicius = rand() % 10 + 1;
-          }
-          cout << "Sugeneruotas namu darbu kiekis: " << ndskaicius << endl;
-          cout << "Sugeneruoti namu darbu pazymiai: ";
-          generateRandomGrades(student, ndskaicius);
-
-          cout << endl;
-
-          student.setEgzaminas(rand() % 10 + 1);
-          cout << "Sugeneruotas egzamino pazymys: " << student.getEgzaminas()
-               << endl;
-        } 
-        else {
-          cout << "Iveskite namu darbu pazymius (atskirkite ivertinimus "
-                  "tarpais baigti - spauskite Enter): ";
-          int k;
-
-          while (is >> k) {
-            if (k < 0 || k > 10) {
-              throw out_of_range(
-                "Invalid input. Please enter a number between 0 and 10.");
-            }
-            student.addPazymys(k);
-
-            if (is.peek() == '\n') {
-              is.ignore(); // Ignore the newline character
-              break;
-            }
-          }
-
-          // Additional logic for calculating average, median, and final grade
-          // if needed
-          calculateAverage(student);
-          calculateMedian(student);
-          student.setGalutinis(student.getVid());
-          return is;
-        }
-    }
-
-    if (ndskaicius > 0) {
-        cout
-          << "Iveskite namu darbu pazymius (atskirkite ivertinimus tarpais): ";
-        for (int i = 0; i < ndskaicius; ++i) {
-          int pazymys;
-          is >> pazymys;
-          student.addPazymys(pazymys);
-        }
-    }
-
-    cout << "Iveskite egzamino bala: ";
-    is >> student.egz;
-
-    // Additional logic for calculating average, median, and final grade if
-    // needed
-    calculateAverage(student);
-    calculateMedian(student);
-    student.setGalutinis(student.getVid());
-
-    return is;
 }*/
