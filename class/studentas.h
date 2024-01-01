@@ -29,10 +29,9 @@ private:
     float vidur;
     float median;
     float galutinis;
-    //int choice;
 
 public:
-    zmogus(): egz(0), vidur(0), median(0), galutinis(0) /*choice(0)*/ {}
+    zmogus(): egz(0), vidur(0), median(0), galutinis(0) {}
     zmogus(istream& is);
     istream& readzmogus(istream&);
     void clearND() { nd.clear(); }
@@ -98,7 +97,6 @@ public:
     void setMed(float med) { median = med; }
     void setGalutinis(float gal) { galutinis = gal; }
     void addPazymys(int paz) { nd.push_back(paz); }
-    //void setChoice(int c) { choice = c; }
 
 
     inline string getVardas() const { return vardas; }
