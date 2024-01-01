@@ -353,35 +353,7 @@ void generateRandomGrades(zmogus& zmog, int ndskaicius) {
         zmog.addPazymys(k);
     }
 }
-/* void printStudentDataToFile(const list<zmogus>& grupe, int choice,
-                                 ofstream& outputFile)
-{
-    outputFile << std::left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(10) << "Galutinis (";
 
-    if (choice == 1) {
-        outputFile << std::left << "vid.)";
-    }
-    else if (choice == 2) {
-        outputFile << std::left << "med.)";
-    }
-
-    outputFile << endl;
-
-    for (const auto& zmogus : grupe) {
-        
-        outputFile << std::left << setw(15) << zmogus.getVardas() << setw(15) << zmogus.getPavarde() << setw(20);
-
-        if (choice == 1) {
-            float galutinis = zmogus.getVid() * 0.4 + zmogus.getEgzaminas() * 0.6;
-            outputFile << fixed << galutinis << setprecision(2);
-        }
-        else if (choice == 2) {
-            float galutinis = zmogus.getMed() * 0.4 + zmogus.getEgzaminas() * 0.6;
-            outputFile << fixed << galutinis << setprecision(2);
-        }
-        outputFile << endl;
-    }
-}*/
 void printStudentDataToFile( const list<zmogus>& grupe,
                                  int choice,
                             ofstream& outputFile)
@@ -837,45 +809,3 @@ bool rikiavimaspav(const zmogus& a, const zmogus& b) {
 
 }
 
-
-/*
-void zmogus::calculateMedian() {
-    nd.sort();
-
-    if (nd.size() % 2 == 0) {
-        auto it1 = nd.begin();
-        std::advance(it1, nd.size() / 2 - 1);
-        int mid1 = *it1;
-
-        auto it2 = nd.begin();
-        std::advance(it2, nd.size() / 2);
-        int mid2 = *it2;
-
-        med = (mid1 + mid2) / 2.0;
-    }
-    else {
-        auto it = nd.begin();
-        std::advance(it, nd.size() / 2);
-        med = *it;
-    }
-}
-
-void zmogus::calculateAverage() {
-    float nd_sum = 0;
-    for (int k : nd) {
-        nd_sum += k;
-    }
-    vid = (nd_sum / nd.size());
-}
-
-void zmogus::calculateGalutinis() {
-    if (nd.size() > 0) {
-        float sum = std::accumulate(nd.begin(), nd.end(), 0.0);
-        vid = (sum / static_cast<float>(nd.size()));
-        galutinis = vid * 0.4 + egz * 0.6;
-    }
-    else {
-        vid = 0.0;
-        galutinis = egz * 0.6;
-    }
-}*/
