@@ -20,10 +20,20 @@
 
 using namespace std;
 
-class zmogus {
+class Person{
+protected: 
+    string vardas, pavarde;
+
+public:
+    Person() {}
+    Person(const std::string& v, const std::string& p) : vardas(v), pavarde(p) {}
+        // Pure virtual function makes the class abstract
+    virtual ~Person() = default;
+    virtual void display() const = 0;
+};
+
+class zmogus : public Person {
 private:
-    std::string vardas;
-    std::string pavarde;
     std::list<int> nd;
     int egz;
     float vidur;
@@ -32,29 +42,16 @@ private:
     //int choice;
 
 public:
-    zmogus(): egz(0), vidur(0), median(0), galutinis(0) /*choice(0)*/ {}
+    zmogus() : Person("", ""), egz(0), vidur(0), median(0), galutinis(0) {}
+    zmogus(const std::string& v, const std::string& p) : Person(v,p), egz(0), vidur(0), median(0), galutinis(0) {}
     zmogus(istream& is);
     istream& readzmogus(istream&);
     void clearND() { nd.clear(); }
 
-    void calculateGalutinis(zmogus& student)
-    {
-      if (student.getPaz().size() > 0) {
-        float sum = std::accumulate(student.getPaz().begin(),
-                                    student.getPaz().end(), 0.0);
-        student.setVid((sum / static_cast<float>(student.getPaz().size())));
-        student.setGalutinis(student.getVid() * 0.4 +
-                             student.getEgzaminas() * 0.6);
-        // std::cout << "Debug: " << student.getVardas() << " " <<
-        // student.getPavarde() << " " << student.getVid() << " " <<
-        // student.getEgzaminas() << " " << student.getGalutinis() <<
-        // std::endl;
-      } else {
-        student.setVid(0.0);
-        student.setGalutinis(student.getEgzaminas() * 0.6);
-      }
+    void display() const override {
+      std::cout << "Student Information: " << vardas << " " << pavarde
+                << std::endl;
     }
-    
 
     friend istream& operator>>(istream& is, zmogus& student);
     friend ostream& operator<<(ostream& os, const zmogus& student){
@@ -109,6 +106,23 @@ public:
     int getEgzaminas() const { return egz; }
     const list<int>& getPaz() const { return nd; }
 
+    void calculateGalutinis(zmogus& student)
+    {
+      if (student.getPaz().size() > 0) {
+        float sum = std::accumulate(student.getPaz().begin(),
+                                    student.getPaz().end(), 0.0);
+        student.setVid((sum / static_cast<float>(student.getPaz().size())));
+        student.setGalutinis(student.getVid() * 0.4 +
+                             student.getEgzaminas() * 0.6);
+        // std::cout << "Debug: " << student.getVardas() << " " <<
+        // student.getPavarde() << " " << student.getVid() << " " <<
+        // student.getEgzaminas() << " " << student.getGalutinis() <<
+        // std::endl;
+      } else {
+        student.setVid(0.0);
+        student.setGalutinis(student.getEgzaminas() * 0.6);
+      }
+    }
 };
 
 void processLine(const std::string& line, std::list<zmogus>& grupe);
