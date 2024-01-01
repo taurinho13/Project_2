@@ -4,7 +4,9 @@
 int main() {
 
   //Person student;
-  
+  zmogus student("Jonas", "Girdys");
+  student.display();
+  cout << "----------" << endl;
   
 
   zmogus obj1;
