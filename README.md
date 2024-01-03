@@ -1,5 +1,8 @@
-# Projektas 1
-Projektas 1 v1.0
+# Projektas 2
+Projektas 2 v2.0
+
+# Versija 2.0
+v1.5 programiniam kodui sukurta dokumentacija naudojantis Doxygen.
 
 # Programos paleidimo instrukcija
 1. Tuščiame aplanke sukuriame du naujus aplankus: Incude ir src. Į 'Include' aplanką sukeliame header failus (pch.h), o į 'src'
